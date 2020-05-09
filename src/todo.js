@@ -42,7 +42,10 @@ function project(projectName){
 		createTag = tagGenerator('project').bind(projectObj);
 
 	todoList.add = (project) => {
-		if(isChild(project)) throw 'Looping projects';
+		if(Object.getPrototypeOf(project) === project.proto
+			&& isChild(project)){
+			throw 'Looping projects';
+		} 
 		_todoList.add(project);
 	}
 
@@ -75,8 +78,7 @@ function project(projectName){
 project.proto = {};
 
 function contact(first, last){
-	let proto = Object.assign(contact.proto, {isChild});
-	let contactObj = Object.create(proto);
+	let contactObj = Object.create(contact.proto);
 
 	let contactName = {first, last},
 		email = '',
@@ -107,8 +109,7 @@ function contact(first, last){
 contact.proto = {};
 
 function category(categoryName){
-	let proto = Object.assign(category.proto, {isChild});
-	let categoryObj = Object.create(proto);
+	let categoryObj = Object.create(category.proto);
 
 	let title = categoryName,
 		favorite = false,
@@ -213,4 +214,4 @@ function tagGenerator(tagType){
 
 
 
-export {todo, project};
+export {todo, project, contact, category};
