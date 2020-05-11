@@ -13,8 +13,11 @@ let body = document.querySelector('body'),
 	main = document.querySelector('main');
 
 let navButton = document.createElement('button'),
-	windowTitle = document.createElement('h1'),
+	windowTitle = document.createElement('input'),
 	contactsButton = document.createElement('button');
+
+windowTitle.setAttribute('type', 'text');
+windowTitle.disabled = true;
 
 navButton.classList.add('nav-button');
 windowTitle.classList.add('window-title');
@@ -57,6 +60,7 @@ navMenu.appendChild(categoriesLink);
 navMenu.appendChild(contactsLink);
 
 navButton.addEventListener('click', toggleNavMenu);
+window.addEventListener('click', closeNavMenu);
 
 header.appendChild(navMenu);
 
@@ -64,7 +68,9 @@ function toggleNavMenu(){
 	if(navMenu.getAttribute('showing') === 'true'){
 		navMenu.setAttribute('showing', 'false');
 	}
-	else navMenu.setAttribute('showing', 'true');
+	else{
+		setTimeout(() => navMenu.setAttribute('showing', 'true'), 5);
+	} 
 }
 
 function openNavMenu(){
@@ -77,10 +83,11 @@ function closeNavMenu(){
 
 function openCollectionWindow(collection){
 	contactsButton.setAttribute('showing', 'false');
+	windowTitle.disabled = true;
 	main.innerHTML = '';
 
 	let title = (collection === projects)? 'Projects': 'Categories';
-	windowTitle.textContent = title;
+	windowTitle.value = title;
 	displayCollection(collection);
 }
 
@@ -89,7 +96,7 @@ function openEditWindow(){
 }
 
 function openContactsWindow(){
-	windowTitle.textContent = 'Contacts';
+	windowTitle.value = 'Contacts';
 
 }
 
