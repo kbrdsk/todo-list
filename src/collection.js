@@ -1,5 +1,8 @@
-function displayCollection(main, collection){
+import {displayProject} from './project.js';
+
+function displayCollection(collection){
 	let itemSet = collection.collection;
+	let main = document.querySelector('main');
 
 	main.setAttribute('displaying', 'collection');
 
@@ -7,20 +10,21 @@ function displayCollection(main, collection){
 		main.appendChild(displayItem(item));
 	}
 
-	let addButton = createAddButton(main, collection);
+	let addButton = createAddButton(collection);
 	main.appendChild(addButton);
 }
 
-function createAddButton(main, collection){
+function createAddButton(collection){
 	let addButton = document.createElement('button');
 	addButton.classList.add('add-button');
 	addButton.textContent = '+';
-	addButton.addEventListener('click', () => addItem(main, collection));
+	addButton.addEventListener('click', () => addItem(collection));
 
 	return addButton;
 }
 
-function addItem(main, collection){
+function addItem(collection){
+	let main = document.querySelector('main');
 	let newItem = collection.itemGenerator();
 	collection.collection.add(newItem);
 	main.appendChild(displayItem(newItem));
@@ -33,9 +37,11 @@ function displayItem(item){
 	let title = document.createElement('h3');
 	title.classList.add('collection-item-title');
 	title.textContent = item.title;
+	title.addEventListener('click', () => displayItemWindow(item))
 
 	let preview = document.createElement('p');
 	preview.classList.add('collection-item-preview');
+	preview.textContent = item.description;
 
 	let favorite = document.createElement('button');
 	favorite.classList.add('collection-item-favorite');
@@ -52,6 +58,10 @@ function displayItem(item){
 	itemDisplay.appendChild(preview);
 
 	return itemDisplay;
+}
+
+function displayItemWindow(item){
+	if(item.createTag().tagType === 'project') displayProject(item);
 }
 
 function toggleFavorite(display, item){

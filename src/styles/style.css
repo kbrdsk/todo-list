@@ -1,6 +1,8 @@
 .nav-menu{
 	display: flex;
 	flex-direction: column;
+	background-color: #fff;
+	padding: 7px;
 }
 
 .nav-menu[showing = false]{
@@ -14,7 +16,7 @@ header{
 
 .nav-menu{
 	position: absolute;
-	top: 15px;
+	top: 22px;
 }
 
 .add-button{

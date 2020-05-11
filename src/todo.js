@@ -1,9 +1,10 @@
 let isDate = require('date-fns/isDate');
 
-function todo(todoName){
+function todo(todoName = 'New Todo'){
 	let title = todoName,
 		description = '',
 		urgency = 0,
+		isDone = false,
 		dueDate = todoDate(),
 		scheduleDate = todoDate(),
 		tags = tagList();
@@ -14,6 +15,7 @@ function todo(todoName){
 		{
 			title, 
 			description, 
+			isDone,
 			urgency,
 			dueDate, 
 			scheduleDate, 
@@ -34,6 +36,7 @@ function project(projectName = 'New Project'){
 		description = '',
 		favorite = false,
 		urgency = 0,
+		isDone = false,
 		dueDate = todoDate(),
 		scheduleDate = todoDate(),
 		tags = tagList(),
@@ -63,6 +66,7 @@ function project(projectName = 'New Project'){
 			title, 
 			description, 
 			favorite,
+			isDone,
 			urgency,
 			dueDate, 
 			scheduleDate, 
@@ -77,7 +81,7 @@ function project(projectName = 'New Project'){
 
 project.proto = {};
 
-function contact(first, last){
+function contact(first = 'New', last = 'Contact'){
 	let contactObj = Object.create(contact.proto);
 
 	let contactName = {first, last},

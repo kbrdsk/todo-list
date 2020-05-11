@@ -81,7 +81,7 @@ function openCollectionWindow(collection){
 
 	let title = (collection === projects)? 'Projects': 'Categories';
 	windowTitle.textContent = title;
-	displayCollection(main, collection);
+	displayCollection(collection);
 }
 
 function openEditWindow(){
@@ -93,4 +93,7 @@ function openContactsWindow(){
 
 }
 
+
 openCollectionWindow(projects);
+
+export {projects, todos, categories, contacts};
