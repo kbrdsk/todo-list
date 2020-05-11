@@ -6,7 +6,8 @@ let projects = new Set(),
 	contacts = new Set(),
 	todos = new Set();
 
-let header = document.querySelector('header'),
+let body = document.querySelector('body'),
+	header = document.querySelector('header'),
 	footer = document.querySelector('footer'),
 	main = document.querySelector('main');
 
@@ -43,10 +44,17 @@ navMenu.appendChild(projectsLink);
 navMenu.appendChild(categoriesLink);
 navMenu.appendChild(contactsLink);
 
-navButton.addEventListener('click', openNavMenu);
+navButton.addEventListener('click', toggleNavMenu);
 
 header.appendChild(navButton);
 header.appendChild(navMenu);
+
+function toggleNavMenu(){
+	if(navMenu.getAttribute('showing') === 'true'){
+		navMenu.setAttribute('showing', 'false');
+	}
+	else navMenu.setAttribute('showing', 'true');
+}
 
 function openNavMenu(){
 	navMenu.setAttribute('showing', 'true');
