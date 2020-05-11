@@ -16,3 +16,27 @@ header{
 	position: absolute;
 	top: 15px;
 }
+
+.add-button{
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+}
+
+main[displaying=collection]{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+.collection-item-display{
+	margin: 15px;
+	background-color: #ddd;
+	height: 80px;
+	width: 130px;
+	padding: 10px;
+}
+
+.collection-item-favorite[is-favorite = true]{
+	background-color: #CFB53B;
+}

@@ -1,9 +1,9 @@
 import {todo, project, category, contact} from './todo.js';
-import {displayCollection} from './collection.js';
+import {displayCollection, createCollection} from './collection.js';
 import './styles/style.css';
 
-let projects = new Set(),
-	categories = new Set(),
+let projects = createCollection(project),
+	categories = createCollection(category),
 	contacts = new Set(),
 	todos = new Set();
 
@@ -89,5 +89,8 @@ function openEditWindow(){
 }
 
 function openContactsWindow(){
+	windowTitle.textContent = 'Contacts';
 
 }
+
+openCollectionWindow(projects);

@@ -26,7 +26,7 @@ function todo(todoName){
 
 todo.proto = {};
 
-function project(projectName){
+function project(projectName = 'New Project'){
 	let proto = Object.assign(project.proto, {isChild});
 	let projectObj = Object.create(proto);
 
@@ -108,7 +108,7 @@ function contact(first, last){
 
 contact.proto = {};
 
-function category(categoryName){
+function category(categoryName = 'New Category'){
 	let categoryObj = Object.create(category.proto);
 
 	let title = categoryName,
