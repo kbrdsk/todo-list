@@ -1,3 +1,5 @@
+import {displayTodoWindow} from './todo-display.js';
+
 function displayTodoList(todoList){
 	let listDisplay = document.createElement('div');
 	listDisplay.classList.add('todo-list');
@@ -18,7 +20,7 @@ function displayTodoItem(item){
 
 	let title = document.createElement('a');
 	title.textContent = item.title;
-	title.textContent = item.title;
+	title.addEventListener('click', () => displayTodoWindow(item));
 
 	let dueWarning = document.createElement('span');
 	dueWarning.classList.add('due-warning');

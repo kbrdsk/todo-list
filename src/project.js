@@ -10,7 +10,7 @@ function displayProject(projectItem){
 
 	title.value = projectItem.title;
 	title.disabled = false;
-	title.addEventListener('change', e => changeTitle(projectItem, title.value));
+	title.activeObject = projectItem;
 
 	let todoListDisplay = displayTodoList(projectItem.todoList.list());
 
@@ -26,10 +26,6 @@ function createAddButton(projectItem){
 	addButton.addEventListener('click', () => addTodoItem(projectItem));
 
 	return addButton;
-}
-
-function changeTitle(projectItem, newTitle){
-	projectItem.title = newTitle;
 }
 
 function addTodoItem(projectItem){

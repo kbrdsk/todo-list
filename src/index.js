@@ -18,6 +18,11 @@ let navButton = document.createElement('button'),
 
 windowTitle.setAttribute('type', 'text');
 windowTitle.disabled = true;
+windowTitle.addEventListener('change', e => changeTitle(e.target));
+
+function changeTitle(title){
+	title.activeObject.title = title.value;
+}
 
 navButton.classList.add('nav-button');
 windowTitle.classList.add('window-title');
