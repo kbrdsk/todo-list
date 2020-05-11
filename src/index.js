@@ -1,4 +1,5 @@
 import {todo, project, category, contact} from './todo.js';
+import {displayCollection} from './collection.js';
 import './styles/style.css';
 
 let projects = new Set(),
@@ -11,33 +12,44 @@ let body = document.querySelector('body'),
 	footer = document.querySelector('footer'),
 	main = document.querySelector('main');
 
+let navButton = document.createElement('button'),
+	windowTitle = document.createElement('h1'),
+	contactsButton = document.createElement('button');
 
+navButton.classList.add('nav-button');
+windowTitle.classList.add('window-title');
+contactsButton.classList.add('contacts-button');
+
+for(let headerElement of [navButton, windowTitle, contactsButton]){
+	header.appendChild(headerElement);
+}
 
 //nav menu
 
-let navButton = document.createElement('button'),
-	navMenu = document.createElement('div'),
+let navMenu = document.createElement('div'),
 	editLink = document.createElement('a'),
 	categoriesLink = document.createElement('a'),
 	projectsLink = document.createElement('a'),
 	contactsLink = document.createElement('a');
-
-navButton.classList.add('nav-button');
 
 navMenu.classList.add('nav-menu');
 navMenu.setAttribute('showing', 'false');
 
 editLink.classList.add('nav-link');
 editLink.textContent = 'Edit';
+editLink.addEventListener('click', openEditWindow);
 
 categoriesLink.classList.add('nav-link');
 categoriesLink.textContent = 'Categories';
+categoriesLink.addEventListener('click', () => openCollectionWindow(categories));
 
 projectsLink.classList.add('nav-link');
 projectsLink.textContent = 'Projects';
+projectsLink.addEventListener('click', () => openCollectionWindow(projects));
 
 contactsLink.classList.add('nav-link');
 contactsLink.textContent = 'Contacts';
+contactsLink.addEventListener('click', openContactsWindow);
 
 navMenu.appendChild(editLink);
 navMenu.appendChild(projectsLink);
@@ -46,7 +58,6 @@ navMenu.appendChild(contactsLink);
 
 navButton.addEventListener('click', toggleNavMenu);
 
-header.appendChild(navButton);
 header.appendChild(navMenu);
 
 function toggleNavMenu(){
@@ -62,4 +73,21 @@ function openNavMenu(){
 
 function closeNavMenu(){
 	navMenu.setAttribute('showing', 'false');
+}
+
+function openCollectionWindow(collection){
+	contactsButton.setAttribute('showing', 'false');
+	main.innerHTML = '';
+
+	let title = (collection === projects)? 'Projects': 'Categories';
+	windowTitle.textContent = title;
+	displayCollection(main, collection);
+}
+
+function openEditWindow(){
+
+}
+
+function openContactsWindow(){
+
 }
