@@ -15,17 +15,6 @@ button:focus{
 	outline: none;
 }
 
-.nav-menu{
-	display: flex;
-	flex-direction: column;
-	background-color: #fff;
-	padding: 7px;
-}
-
-.nav-menu[showing = false]{
-	display: none;
-}
-
 header{
 	height: 8vh;
 	display: flex;
@@ -54,15 +43,24 @@ header{
 	border: none;
 	background-color: #fff;
 	text-align: center;
-	font-size: 8vw;
-	width: 30vw;
+	font-size: 6vw;
+	width: 70vw;
 }
 
 .nav-menu{
 	position: absolute;
 	top: 10vw;
-	left: 4vw;
+	left: 3.5vw;
 	font-size: 4.2vw;
+	display: flex;
+	flex-direction: column;
+	background-color: #ffffffdf;
+	border-radius: 3%;
+	padding: 7px;
+}
+
+.nav-menu[showing = false]{
+	display: none;
 }
 
 .nav-link{
@@ -84,22 +82,27 @@ main{
 	text-align: center;
 }
 
-main[displaying=category]{
-
+.description{
+	border: solid 1px #eee;
+	overflow-wrap: break-word;
+	height: auto;
+	height: 10vh;
 }
 
-main[displaying=todo]{
-
+.todo-list{
+	padding: 5vw;
 }
 
-main[displaying=contact]{
-
+main[displaying=project], 
+	[displaying=todo], 
+	[displaying=contact], 
+	[displaying=category]{
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	font-size: 3.5vw;
+	padding: 0 10vw;
 }
-
-main[displaying=project]{
-
-}
-
 
 main[displaying=collection]{
 	display: flex;
@@ -108,21 +111,31 @@ main[displaying=collection]{
 }
 
 .collection-item-display{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 	margin: 2vw;
 	background-color: var(--color-3);
 	height: 20vh;
 	width: 25vw;
 	padding: 1vw;
-	font-size: 4.2vw;
 	border-radius: 10%;
 }
 
 .collection-item-header{
 	display: flex;
 	justify-content: space-between;
-	padding: 0;
+	padding: 1vw;
+	height: 4vw;
+	font-size: 3.5vw;
 }
 
+
+.collection-item-favorite{
+	height: 3.5vw;
+	width: 3.5vw;
+	border-radius: 50%;
+}
 .collection-item-favorite[is-favorite = true]{
-	background-color: #CFB53B;
+	background-color: gold;
 }
