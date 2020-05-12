@@ -4,6 +4,7 @@ function displayTodoWindow(todoItem){
 
 	main.innerHTML = '';
 	title.value = todoItem.title;
+	title.disabled = false;
 	title.activeObject = todoItem;
 
 	

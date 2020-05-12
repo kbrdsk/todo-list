@@ -1,5 +1,5 @@
 import {project, todo, category, contact} from './todo.js'; 
-import {projects, todos, categories, contacts} from './index.js';
+import {projects, todos, createAddButton} from './index.js';
 import {displayTodoList} from './todo-list.js';
 import {displayDescription} from './todo-display.js';
 
@@ -17,21 +17,12 @@ function displayProject(projectItem){
 
 	main.appendChild(displayDescription(projectItem));
 	main.appendChild(todoListDisplay);
-	main.appendChild(createAddButton(projectItem));
-}
-
-function createAddButton(projectItem){
-	let addButton = document.createElement('button');
-	addButton.classList.add('add-button');
-	addButton.textContent = '+';
-	addButton.addEventListener('click', () => addTodoItem(projectItem));
-
-	return addButton;
+	main.appendChild(createAddButton(() => addTodoItem(projectItem)));
 }
 
 function addTodoItem(projectItem){
-	let newTodo = todo();
-	todos.add(newTodo);
+	let newTodo = todos.itemGenerator();
+	todos.collection.add(newTodo);
 	projectItem.todoList.add(newTodo);
 	displayProject(projectItem);
 }

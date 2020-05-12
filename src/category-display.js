@@ -8,6 +8,7 @@ function displayCategory(category){
 
 	let title = document.querySelector('.window-title');
 	title.activeObject = category;
+	title.disabled = false;
 	title.value = category.title;
 
 	main.appendChild(displayTodoList(category.todoList.list()));

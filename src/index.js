@@ -3,15 +3,20 @@ import {displayCollection, createCollection} from './collection.js';
 import {displayContacts} from './contacts.js';
 import './styles/style.css';
 
+//universal variables
+
 let projects = createCollection(project),
 	categories = createCollection(category),
 	contacts = createCollection(contact),
-	todos = new Set();
+	todos = createCollection(todo);
 
 let body = document.querySelector('body'),
 	header = document.querySelector('header'),
 	footer = document.querySelector('footer'),
 	main = document.querySelector('main');
+
+
+//header
 
 let navButton = document.createElement('button'),
 	windowTitle = document.createElement('input'),
@@ -109,6 +114,9 @@ function openContactsWindow(){
 	displayContacts(contacts);
 }
 
+
+//universal helper functions
+
 function createAddButton(addFunction){
 	let addButton = document.createElement('button');
 	addButton.classList.add('add-button');
@@ -119,6 +127,11 @@ function createAddButton(addFunction){
 }
 
 
+//initialize
+
 openCollectionWindow(projects);
+
+
+//exports
 
 export {projects, todos, categories, contacts, createAddButton};
