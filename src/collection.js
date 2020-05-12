@@ -1,4 +1,5 @@
 import {displayProject} from './project.js';
+import {displayCategory} from './category-display.js';
 
 function displayCollection(collection){
 	let itemSet = collection.collection;
@@ -62,6 +63,7 @@ function displayItem(item){
 
 function displayItemWindow(item){
 	if(item.createTag().tagType === 'project') displayProject(item);
+	if(item.createTag().tagType === 'category') displayCategory(item);
 }
 
 function toggleFavorite(display, item){
