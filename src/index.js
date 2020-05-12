@@ -1,10 +1,11 @@
 import {todo, project, category, contact} from './todo.js';
 import {displayCollection, createCollection} from './collection.js';
+import {displayContacts} from './contacts.js';
 import './styles/style.css';
 
 let projects = createCollection(project),
 	categories = createCollection(category),
-	contacts = new Set(),
+	contacts = createCollection(contact),
 	todos = new Set();
 
 let body = document.querySelector('body'),
@@ -101,11 +102,23 @@ function openEditWindow(){
 }
 
 function openContactsWindow(){
+	windowTitle.disabled = true;
 	windowTitle.value = 'Contacts';
+	main.innerHTML = '';
 
+	displayContacts(contacts);
+}
+
+function createAddButton(addFunction){
+	let addButton = document.createElement('button');
+	addButton.classList.add('add-button');
+	addButton.textContent = '+';
+	addButton.addEventListener('click', addFunction);
+
+	return addButton;
 }
 
 
 openCollectionWindow(projects);
 
-export {projects, todos, categories, contacts};
+export {projects, todos, categories, contacts, createAddButton};

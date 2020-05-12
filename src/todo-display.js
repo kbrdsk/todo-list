@@ -6,17 +6,23 @@ function displayTodoWindow(todoItem){
 	title.value = todoItem.title;
 	title.activeObject = todoItem;
 
+	
+	main.appendChild(displayDescription(todoItem));
+}
+
+function displayDescription(todoItem){
 	let description = document.createElement('textarea');
+	description.classList.add('description');
 	description.value = todoItem.description;
 	description.activeObject = todoItem
 	description.addEventListener('change', e => 
 		changeDescription(e.target));
 
-	main.appendChild(description);
+	return description;
 }
 
 function changeDescription(description){
 	description.activeObject.description = description.value;
 }
 
-export {displayTodoWindow};
+export {displayTodoWindow, displayDescription};

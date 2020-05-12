@@ -1,6 +1,7 @@
 import {project, todo, category, contact} from './todo.js'; 
 import {projects, todos, categories, contacts} from './index.js';
 import {displayTodoList} from './todo-list.js';
+import {displayDescription} from './todo-display.js';
 
 function displayProject(projectItem){
 	let main = document.querySelector('main'),
@@ -14,8 +15,8 @@ function displayProject(projectItem){
 
 	let todoListDisplay = displayTodoList(projectItem.todoList.list());
 
+	main.appendChild(displayDescription(projectItem));
 	main.appendChild(todoListDisplay);
-
 	main.appendChild(createAddButton(projectItem));
 }
 
