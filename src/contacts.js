@@ -4,6 +4,8 @@ import {displayContactWindow} from './contact-display.js';
 function displayContacts(contactList){
 	let main = document.querySelector('main');
 	main.innerHTML = '';
+	main.setAttribute('displaying', 'contact');
+
 	let contactsContainer = document.createElement('div');
 	contactsContainer.classList.add('contacts-container');
 	for(let contact of contactList.collection){

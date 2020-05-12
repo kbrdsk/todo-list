@@ -5,6 +5,7 @@ import {todo} from './todo.js';
 function displayCategory(category){
 	let main = document.querySelector('main');
 	main.innerHTML = '';
+	main.setAttribute('displaying', 'category');
 
 	let title = document.querySelector('.window-title');
 	title.activeObject = category;

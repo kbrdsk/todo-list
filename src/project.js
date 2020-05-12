@@ -7,6 +7,7 @@ function displayProject(projectItem){
 	let main = document.querySelector('main'),
 		title = document.querySelector('.window-title');
 
+	main.setAttribute('displaying', 'project');
 	main.innerHTML = '';
 
 	title.value = projectItem.title;

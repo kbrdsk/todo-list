@@ -3,6 +3,8 @@ function displayTodoWindow(todoItem){
 		main = document.querySelector('main');
 
 	main.innerHTML = '';
+	main.setAttribute('displaying', 'todo');
+
 	title.value = todoItem.title;
 	title.disabled = false;
 	title.activeObject = todoItem;
