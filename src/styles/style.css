@@ -58,13 +58,14 @@ header{
 .nav-menu{
 	position: absolute;
 	top: 10vw;
-	left: 3.5vw;
+	left: 3vw;
 	font-size: 4.2vw;
 	display: flex;
 	flex-direction: column;
 	background-color: #ffffffdf;
 	border-radius: 3%;
 	padding: 7px;
+	z-index: 1;
 }
 
 .nav-menu[showing = false]{
@@ -76,7 +77,7 @@ header{
 }
 
 main{
-	padding: 1vw;
+	padding: 3vw;
 	position: relative;
 }
 
