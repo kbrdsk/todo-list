@@ -2,10 +2,12 @@ import {project, todo, category, contact} from './todo.js';
 import {projects, todos, createAddButton} from './index.js';
 import {displayTodoList} from './todo-list.js';
 import {displayDescription} from './todo-display.js';
+import {displayTags} from './tag-display.js';
 
 function displayProject(projectItem){
 	let main = document.querySelector('main'),
-		title = document.querySelector('.window-title');
+		title = document.querySelector('.window-title'),
+		tagContainer = document.querySelector('.tag-display-container');
 
 	main.setAttribute('displaying', 'project');
 	main.innerHTML = '';
@@ -19,6 +21,9 @@ function displayProject(projectItem){
 	main.appendChild(displayDescription(projectItem));
 	main.appendChild(todoListDisplay);
 	main.appendChild(createAddButton(() => addTodoItem(projectItem)));
+
+	tagContainer.innerHTML = '';
+	tagContainer.appendChild(displayTags(projectItem.tags.list()));
 }
 
 function addTodoItem(projectItem){

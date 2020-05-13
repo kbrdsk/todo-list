@@ -15,6 +15,7 @@ let body = document.querySelector('body'),
 	footer = document.querySelector('footer'),
 	main = document.querySelector('main');
 
+footer.classList.add('tag-display-container');
 
 //header
 
