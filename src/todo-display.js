@@ -1,6 +1,9 @@
+import {displayTags} from './tag-display.js';
+
 function displayTodoWindow(todoItem){
 	let title = document.querySelector('.window-title'),
-		main = document.querySelector('main');
+		main = document.querySelector('main'),
+		tagContainer = document.querySelector('.tag-display-container');
 
 	main.innerHTML = '';
 	main.setAttribute('displaying', 'todo');
@@ -9,8 +12,10 @@ function displayTodoWindow(todoItem){
 	title.disabled = false;
 	title.activeObject = todoItem;
 
-	
 	main.appendChild(displayDescription(todoItem));
+
+	tagContainer.innerHTML = '';
+	tagContainer.appendChild(displayTags(todoItem.tags.list()));
 }
 
 function displayDescription(todoItem){

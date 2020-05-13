@@ -15,13 +15,13 @@ function displayTags(tags){
 function displayTagItem(tag){
 	let tagDisplay = document.createElement('div');
 	tagDisplay.classList.add('tag');
-	tag.setAttribute('type', tag.tagType);
+	tagDisplay.setAttribute('type', tag.tagType);
 
 	let typeIcon = document.createElement('div');
 
 	let titleDisplay = document.createElement('a');
 	titleDisplay.textContent = tag.id.title;
-	titlleDisplay.addEventListener('click', () => loadReferencedObject(tag));
+	titleDisplay.addEventListener('click', () => loadReferencedObject(tag));
 
 	tagDisplay.appendChild(typeIcon);
 	tagDisplay.appendChild(titleDisplay);
