@@ -102,6 +102,29 @@ main{
 	padding: 5vw;
 }
 
+.todo-checkbox {
+    content: '';
+    background: #e5e5e5;
+    color: #e5e5e5;
+    padding: 0 1.5vw 0 0.5vw;
+    width: 1.5vw;
+    margin: 0 2vw;
+    border-radius: 15%;
+}
+
+.todo-listing{
+	display: flex;
+	margin: 3vw 0;
+}
+
+.todo-listing[done=true]{
+	opacity: 0.5;
+}
+
+.todo-listing[done=true] > .todo-checkbox{
+	color: black;
+}
+
 main[displaying=project], 
 	[displaying=todo], 
 	[displaying=contact], 

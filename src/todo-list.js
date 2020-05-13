@@ -13,10 +13,14 @@ function displayTodoList(todoList){
 
 function displayTodoItem(item){
 	let listing = document.createElement('div');
+	listing.classList.add('todo-listing');
+	listing.todoItem = item;
+	listing.setAttribute('done', item.isDone);
 
-	let checkBox = document.createElement('input');
+	let checkBox = document.createElement('div');
 	checkBox.classList.add('todo-checkbox');
-	checkBox.setAttribute('type', 'checkbox');
+	checkBox.textContent = '\u2713';
+	checkBox.addEventListener('click', e => toggleTodoFinished(listing, e.target));
 
 	let title = document.createElement('a');
 	title.textContent = item.title;
@@ -31,6 +35,12 @@ function displayTodoItem(item){
 	}
 
 	return listing;
+}
+
+function toggleTodoFinished(listing, checkBox){
+	let isDone = !listing.todoItem.isDone;
+	listing.todoItem.isDone = isDone;
+	listing.setAttribute('done', isDone);
 }
 
 export {displayTodoList};
