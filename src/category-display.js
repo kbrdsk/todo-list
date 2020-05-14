@@ -6,6 +6,9 @@ function displayCategory(category){
 	let main = document.querySelector('main');
 	main.innerHTML = '';
 	main.setAttribute('displaying', 'category');
+	let tagContainer = document.querySelector('.tag-display-container');
+
+	tagContainer.innerHTML = '';
 
 	let title = document.querySelector('.window-title');
 	title.activeObject = category;

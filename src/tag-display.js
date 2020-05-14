@@ -52,28 +52,31 @@ function addTagButton(){
 function displayAddTagWindow(){
 	let selectedTag = {listing: null};
 
+	let addTagWindowContainer = document.createElement('div');
+	addTagWindowContainer.classList.add('popup-window-container');
+
 	let addTagWindow = document.createElement('div');
 	addTagWindow.classList.add('popup-window');
 	addTagWindow.classList.add('add-tag-window');
 
 	let closeTagWindow = () => {
-		document.querySelector('main').removeChild(addTagWindow);
+		document.querySelector('body').removeChild(addTagWindowContainer);
 	}
 
 	let closeButton = document.createElement('div');
 	closeButton.classList.add('close-button');
 	closeButton.textContent = 'X';
+	closeButton.addEventListener('click', closeTagWindow);
 
 	let backButton = document.createElement('button');
 	backButton.classList.add('back-button');
 	backButton.classList.add('add-tag-nav-button');
 	backButton.textContent = 'Back';
-	backButton.addEventListener('click', closeTagWindow);
 
 	let selectButton = document.createElement('button');
-	backButton.classList.add('select-button');
-	backButton.classList.add('add-tag-nav-button');
-	backButton.textContent = 'Select';
+	selectButton.classList.add('select-button');
+	selectButton.classList.add('add-tag-nav-button');
+	selectButton.textContent = 'Select';
 
 	let categoryTypeSelect = document.createElement('button');
 	categoryTypeSelect.textContent = 'Category';
@@ -84,21 +87,25 @@ function displayAddTagWindow(){
 	let typeSelectContainer = document.createElement('div');
 	typeSelectContainer.classList.add('type-select-container');
 
+	for(let button of [backButton, selectButton]){
+		button.setAttribute('showing', false);
+	}
+
 	for(let button of [categoryTypeSelect, projectTypeSelect]){
 		button.classList.add('tag-type-select-button');
-		button.setAttribute('showing', false);
 		button.addEventListener('click', ()   => {
 			typeSelectContainer.innerHTML = '';
 			typeSelectContainer.appendChild(displayTagObjectSelection(button, selectedTag));
 			backButton.setAttribute('showing', true);
-			selectButton.setAttribtue('showing', true);
+			selectButton.setAttribute('showing', true);
 		});
+		typeSelectContainer.appendChild(button);
 	}
 
 	backButton.addEventListener('click', () => {
 		typeSelectContainer.innerHTML = '';
-		selectedObject.listing = null;
-		for(let button in [categoryTypeSelect, projectTypeSelect]){
+		selectedTag.listing = null;
+		for(let button of [categoryTypeSelect, projectTypeSelect]){
 			typeSelectContainer.appendChild(button);
 		}
 		backButton.setAttribute('showing', false);
@@ -107,7 +114,7 @@ function displayAddTagWindow(){
 	});
 
 	selectButton.addEventListener('click', () => {
-		if(selectedObject.listing){
+		if(selectedTag.listing){
 			addTag(selectedTag.listing.tagObject.createTag());
 			closeTagWindow();
 		}
@@ -119,29 +126,37 @@ function displayAddTagWindow(){
 	addTagWindow.appendChild(backButton);
 	addTagWindow.appendChild(selectButton);
 
-	document.querySelector('main').appendChild(addTagWindow);
+	addTagWindowContainer.appendChild(addTagWindow);
+	document.querySelector('body').appendChild(addTagWindowContainer);
 }
 
-function displayTagTypeSelection(button, selectedTag){
-	let objectList;
+function displayTagObjectSelection(button, selectedTag){
+	let objectSet;
 	switch(button.textContent){
-		case 'Project': objectList = projects.collection; break;
-		case 'Category': objectList = categories.collection; break;
+		case 'Project': objectSet = projects.collection; break;
+		case 'Category': objectSet = categories.collection; break;
 	}
 
 	let displayList = document.createElement('div');
 	displayList.classList.add('tag-selection-list');
 
+	let parentObject = document.querySelector('.window-title').activeObject;
+	let objectList = Array.from(objectSet)
+						.filter(obj => !hasTag(parentObject, obj));
+
 	for(let tagObject of objectList){
-		let objectListing = document.createElemet('div');
+		let objectListing = document.createElement('div');
+		objectListing.classList.add('tag-object-listing');
 		objectListing.tagObject = tagObject;
 		objectListing.textContent = tagObject.title;
 		objectListing.addEventListener('click', () => {
-			selectedTag.listing.setAttribute('selected', false);
+			if(selectedTag.listing){
+				selectedTag.listing.setAttribute('selected', false);
+			}
 			objectListing.setAttribute('selected', true);
 			selectedTag.listing = objectListing;
 		});
-		objectList.appendChild(objectListing);
+		displayList.appendChild(objectListing);
 	}
 
 	return displayList;
@@ -149,9 +164,16 @@ function displayTagTypeSelection(button, selectedTag){
 
 function addTag(tag){
 	let parentObject = document.querySelector('.window-title').activeObject;
-	activeObject.tags.add(tag);
-	document.querySelector('tag-container').prepend(displayTagItem(tag));
+	if(hasTag(parentObject, tag.id)) return;
+	tag.id.todoList.add(parentObject);
+	document.querySelector('.tag-container').prepend(displayTagItem(tag));
 }
 
+function hasTag(parentObject, tagObject){
+	return parentObject.tags.list()
+							.some(existingTag => {
+								return existingTag.id === tagObject;
+							});
+}
 
 export{displayTags};

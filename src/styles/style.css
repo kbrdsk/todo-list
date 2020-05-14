@@ -175,13 +175,13 @@ main[displaying=collection]{
 }
 
 .tag-container {
-    height: 10vh;
+    min-height: 10vh;
     background-color: var(--color-6);
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: flex-start;
-    padding: 5vw;
+    padding: 3.5vw 5vw;
     font-size: 3vw;
 }
 
@@ -191,5 +191,87 @@ main[displaying=collection]{
     position: relative;
     z-index: 0;
     border-radius: 3vw;
-    margin: 0 1.5vw;
+    margin: 1.5vw 1.5vw;
+}
+
+.popup-window-container{
+	background-color: #fffa;
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.add-tag-window{
+	height: 50vh;
+	width: 50vw;
+	position: absolute;
+	top: 25vh;
+	left: 25vw;
+	background-color: var(--color-4);
+	display: grid;
+	grid-template-areas: 
+	'tag-selection tag-selection'
+	'back-button   select-button';
+	grid-template-rows: 1fr auto;
+	grid-template-columns: 1fr 1fr;
+}
+
+.add-tag-nav-button{
+	font-size: 3vw;
+	height: auto;
+	width: auto;
+}
+
+.close-button{
+	position: absolute;
+	top: 2vw;
+	right: 2vw;
+	font-size: 4vw;
+	font-weight: bold;
+	background-color: #fff0;
+	color: #fff;
+}
+
+.back-button[showing=false], .select-button[showing=false]{
+	display: none;
+}
+
+.back-button{
+	grid-area: back-button;
+}
+
+.select-button{
+	grid-area: select-button;
+}
+
+.type-select-container{
+	grid-area: tag-selection;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tag-selection-list{
+	background: #fff;
+	height: 35vh;
+	width: 35vw;
+	margin: 5vw 5vh;
+	padding: 3vw;
+	font-size: 3vw;
+}
+
+.tag-object-listing{
+	padding: 1vw;
+}
+
+.tag-object-listing[selected=true]{
+	background-color: #eee;
+}
+
+.tag-type-select-button{
+	font-size: 4vw;
+	margin: 3vw;
+	padding: 2vh 2vw;
 }
