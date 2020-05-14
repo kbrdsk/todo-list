@@ -6,6 +6,9 @@ function displayContacts(contactList){
 	main.innerHTML = '';
 	main.setAttribute('displaying', 'contact');
 
+	let tagContainer = document.querySelector('.tag-display-container');
+	tagContainer.innerHTML = '';
+
 	let contactsContainer = document.createElement('div');
 	contactsContainer.classList.add('contacts-container');
 	for(let contact of contactList.collection){

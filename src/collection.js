@@ -4,6 +4,9 @@ import {displayCategory} from './category-display.js';
 function displayCollection(collection){
 	let itemSet = collection.collection;
 	let main = document.querySelector('main');
+	let tagContainer = document.querySelector('.tag-display-container');
+
+	tagContainer.innerHTML = '';
 
 	main.setAttribute('displaying', 'collection');
 
