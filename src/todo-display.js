@@ -1,4 +1,5 @@
 import {displayTags} from './tag-display.js';
+import {todo} from './todo.js';
 
 function displayTodoWindow(todoItem){
 	let title = document.querySelector('.window-title'),
@@ -31,6 +32,10 @@ function displayDescription(todoItem){
 
 function changeDescription(description){
 	description.activeObject.description = description.value;
+}
+
+todo.proto.display = function (){
+	displayTodoWindow(this);
 }
 
 export {displayTodoWindow, displayDescription};

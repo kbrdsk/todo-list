@@ -1,6 +1,9 @@
 import {todo, project, category, contact} from './todo.js';
-import {displayCollection, createCollection} from './collection.js';
-import {displayContacts} from './contacts.js';
+import {displayCollection, createCollection} from './collection-display.js';
+import {displayContacts} from './contact-list-display.js';
+import './project-display.js';
+import './contact-display.js';
+import './category-display.js';
 import './styles/style.css';
 
 //universal variables

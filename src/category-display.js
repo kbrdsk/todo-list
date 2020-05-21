@@ -1,6 +1,6 @@
-import {displayTodoList} from './todo-list.js';
-import {createAddButton} from './index.js';
-import {todo} from './todo.js';
+import {displayTodoList} from './todo-list-display.js';
+import {createAddButton, todos, projects} from './index.js';
+import {category} from './todo.js';
 
 function displayCategory(category){
 	let main = document.querySelector('main');
@@ -22,9 +22,13 @@ function displayCategory(category){
 
 function addTodo(category){
 	return () => {
-		category.todoList.add(todo());
+		category.todoList.add(todos.itemGenerator());
 		displayCategory(category);
 	}
 }
 
-export {displayCategory};
+category.proto.display = function (){
+	displayCategory(this);
+}
+
+/*export {displayCategory};*/

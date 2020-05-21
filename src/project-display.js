@@ -1,6 +1,6 @@
-import {project, todo, category, contact} from './todo.js'; 
+import {project} from './todo.js'; 
 import {projects, todos, createAddButton} from './index.js';
-import {displayTodoList} from './todo-list.js';
+import {displayTodoList} from './todo-list-display.js';
 import {displayDescription} from './todo-display.js';
 import {displayTags} from './tag-display.js';
 
@@ -28,9 +28,12 @@ function displayProject(projectItem){
 
 function addTodoItem(projectItem){
 	let newTodo = todos.itemGenerator();
-	todos.collection.add(newTodo);
 	projectItem.todoList.add(newTodo);
 	displayProject(projectItem);
 }
 
-export {displayProject};
+project.proto.display = function (){
+	displayProject(this);
+}
+
+/*export {displayProject};*/

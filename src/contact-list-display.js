@@ -1,5 +1,5 @@
 import {createAddButton} from './index.js';
-import {displayContactWindow} from './contact-display.js';
+/*import {displayContactWindow} from './contact-display.js';*/
 
 function displayContacts(contactList){
 	let main = document.querySelector('main');
@@ -26,7 +26,7 @@ function displayContact(contact){
 	name.textContent = contact.contactName.last +
 					', ' + 
 					contact.contactName.first;
-	name.addEventListener('click', () => displayContactWindow(contact));
+	name.addEventListener('click', () => contact.display());
 
 	listing.appendChild(name);
 

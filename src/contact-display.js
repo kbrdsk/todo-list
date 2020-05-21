@@ -1,6 +1,6 @@
-import {displayTodoList} from './todo-list.js';
-import {createAddButton} from './index.js';
-import {todo} from './todo.js';
+import {displayTodoList} from './todo-list-display.js';
+import {createAddButton, todos, projects} from './index.js';
+import {contact} from './todo.js';
 
 function displayContactWindow(contact){
 	let main = document.querySelector('main');
@@ -25,9 +25,13 @@ function displayContactInfo(contact){
 
 function addTodo(contact){
 	return () => {
-		contact.todoList.add(todo());
+		contact.todoList.add(todos.itemGenerator());
 		displayContactWindow(contact);
 	}
+}
+
+contact.proto.display = function (){
+	displayContactWindow(this);
 }
 
 export {displayContactWindow};

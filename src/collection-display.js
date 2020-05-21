@@ -1,5 +1,5 @@
-import {displayProject} from './project.js';
-import {displayCategory} from './category-display.js';
+/*import {displayProject} from './project.js';
+import {displayCategory} from './category-display.js';*/
 
 function displayCollection(collection){
 	let itemSet = collection.collection;
@@ -41,7 +41,7 @@ function displayItem(item){
 	let title = document.createElement('h3');
 	title.classList.add('collection-item-title');
 	title.textContent = item.title;
-	title.addEventListener('click', () => displayItemWindow(item))
+	title.addEventListener('click', () => item.display())
 
 	let preview = document.createElement('p');
 	preview.classList.add('collection-item-preview');
@@ -64,10 +64,10 @@ function displayItem(item){
 	return itemDisplay;
 }
 
-function displayItemWindow(item){
+/*function displayItemWindow(item){
 	if(item.createTag().tagType === 'project') displayProject(item);
 	if(item.createTag().tagType === 'category') displayCategory(item);
-}
+}*/
 
 function toggleFavorite(display, item){
 	item.favorite = !item.favorite;
@@ -76,7 +76,12 @@ function toggleFavorite(display, item){
 
 function createCollection(itemGenerator){
 	let collection = new Set();
-	return {collection, itemGenerator};
+	let extendedGenerator = (...args) => {
+		let newItem = itemGenerator(...args);
+		collection.add(newItem);
+		return newItem;
+	}
+	return {collection, itemGenerator: extendedGenerator};
 }
 
 export {displayCollection, createCollection};

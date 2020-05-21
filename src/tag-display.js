@@ -1,8 +1,6 @@
-import {displayProject} from './project.js';
-import {displayCategory} from './category-display.js';
-import {displayContactWindow} from './contact-display.js';
 import {categories, projects} from './index.js';
 
+//creates DOM structure for tag display
 function displayTags(tags){
 	let container = document.createElement('div');
 	container.classList.add('tag-container');
@@ -15,6 +13,7 @@ function displayTags(tags){
 	return container;
 }
 
+//creates DOM structure for tag item
 function displayTagItem(tag){
 	let tagDisplay = document.createElement('div');
 	tagDisplay.classList.add('tag');
@@ -23,8 +22,8 @@ function displayTagItem(tag){
 	let typeIcon = document.createElement('div');
 
 	let titleDisplay = document.createElement('a');
-	titleDisplay.textContent = tag.id.title;
-	titleDisplay.addEventListener('click', () => loadReferencedObject(tag));
+	titleDisplay.textContent = tag.id.title || tag.id.contactName.first;
+	titleDisplay.addEventListener('click', () => tag.id.display());
 
 	tagDisplay.appendChild(typeIcon);
 	tagDisplay.appendChild(titleDisplay);
@@ -32,13 +31,9 @@ function displayTagItem(tag){
 	return tagDisplay;
 }
 
-function loadReferencedObject(tag){
-	switch(tag.tagType){
-		case 'contact': displayContactWindow(tag.id); break;
-		case 'project': displayProject(tag.id); break;
-		case 'category': displayCategory(tag.id); break;
-	}
-}
+
+
+
 
 function addTagButton(){
 	let button = document.createElement('div');
@@ -50,93 +45,114 @@ function addTagButton(){
 }
 
 function displayAddTagWindow(){
-	let selectedTag = {listing: null};
-
 	let addTagWindowContainer = document.createElement('div');
 	addTagWindowContainer.classList.add('popup-window-container');
+	addTagWindowContainer.close = () => {
+		document.querySelector('body').removeChild(addTagWindowContainer);
+	}
 
 	let addTagWindow = document.createElement('div');
 	addTagWindow.classList.add('popup-window');
 	addTagWindow.classList.add('add-tag-window');
 
-	let closeTagWindow = () => {
-		document.querySelector('body').removeChild(addTagWindowContainer);
-	}
+	let closeButton = createCloseButton(addTagWindowContainer.close);
 
+	let typeSelectContainer = document.createElement('div');
+	typeSelectContainer.classList.add('type-select-container');
+
+	addTagWindow.appendChild(closeButton);
+	addTagWindow.appendChild(typeSelectContainer);
+	addTagWindowContainer.appendChild(addTagWindow);
+	document.querySelector('body').appendChild(addTagWindowContainer);
+	displayTypeSelectWindow();
+}
+
+function createCloseButton(closeFunction){
 	let closeButton = document.createElement('div');
 	closeButton.classList.add('close-button');
 	closeButton.textContent = 'X';
-	closeButton.addEventListener('click', closeTagWindow);
+	closeButton.addEventListener('click', closeFunction);
+
+	return closeButton;
+}
+
+function displayTypeSelectWindow(){
+	let categoryTypeSelect = createTypeSelectButton(categories),
+		projectTypeSelect = createTypeSelectButton(projects);
+
+	for(let button of [categoryTypeSelect, projectTypeSelect]){
+		document.querySelector('.type-select-container').appendChild(button);
+	}
+}
+
+function createTypeSelectButton(collection){
+	let title = (collection === projects)? 'Project': 'Category';
+	let button = document.createElement('button');
+	button.textContent = title;
+	button.classList.add('tag-type-select-button');
+	button.addEventListener('click', ()   => {
+		document.querySelector('.type-select-container').innerHTML = '';
+		displayObjectSelectWindow(collection);
+	});
+
+	return button;
+}
+
+function displayObjectSelectWindow(collection){
+	let selectedTag = {listing: null};
+
+	let typeSelectContainer = document.querySelector('.type-select-container');
+	typeSelectContainer.appendChild(
+		displayTagObjectSelection(collection.collection, selectedTag));
+	
+	let container = document.querySelector('.add-tag-window');
+	container.appendChild(createBackButton());
+	container.appendChild(createSelectButton(selectedTag));
+}
+
+function createBackButton(){
+	let container = document.querySelector('.add-tag-window');
 
 	let backButton = document.createElement('button');
 	backButton.classList.add('back-button');
 	backButton.classList.add('add-tag-nav-button');
 	backButton.textContent = 'Back';
 
+	backButton.addEventListener('click', backToTypeSelect);
+
+	return backButton;
+}
+
+function backToTypeSelect(){
+	document.querySelector('.type-select-container').innerHTML = '';
+
+	let container = document.querySelector('.add-tag-window');
+	container.removeChild(document.querySelector('.back-button'));
+	container.removeChild(document.querySelector('.select-button'));
+
+	displayTypeSelectWindow();
+
+}
+
+function createSelectButton(selectedTag){
 	let selectButton = document.createElement('button');
 	selectButton.classList.add('select-button');
 	selectButton.classList.add('add-tag-nav-button');
 	selectButton.textContent = 'Select';
 
-	let categoryTypeSelect = document.createElement('button');
-	categoryTypeSelect.textContent = 'Category';
+	selectButton.addEventListener('click', () => submitAddTag(selectedTag)); 
 
-	let projectTypeSelect = document.createElement('button');
-	projectTypeSelect.textContent = 'Project';
-
-	let typeSelectContainer = document.createElement('div');
-	typeSelectContainer.classList.add('type-select-container');
-
-	for(let button of [backButton, selectButton]){
-		button.setAttribute('showing', false);
-	}
-
-	for(let button of [categoryTypeSelect, projectTypeSelect]){
-		button.classList.add('tag-type-select-button');
-		button.addEventListener('click', ()   => {
-			typeSelectContainer.innerHTML = '';
-			typeSelectContainer.appendChild(displayTagObjectSelection(button, selectedTag));
-			backButton.setAttribute('showing', true);
-			selectButton.setAttribute('showing', true);
-		});
-		typeSelectContainer.appendChild(button);
-	}
-
-	backButton.addEventListener('click', () => {
-		typeSelectContainer.innerHTML = '';
-		selectedTag.listing = null;
-		for(let button of [categoryTypeSelect, projectTypeSelect]){
-			typeSelectContainer.appendChild(button);
-		}
-		backButton.setAttribute('showing', false);
-		selectButton.setAttribute('showing', false);
-
-	});
-
-	selectButton.addEventListener('click', () => {
-		if(selectedTag.listing){
-			addTag(selectedTag.listing.tagObject.createTag());
-			closeTagWindow();
-		}
-		
-	})
-
-	addTagWindow.appendChild(closeButton);
-	addTagWindow.appendChild(typeSelectContainer);
-	addTagWindow.appendChild(backButton);
-	addTagWindow.appendChild(selectButton);
-
-	addTagWindowContainer.appendChild(addTagWindow);
-	document.querySelector('body').appendChild(addTagWindowContainer);
+	return selectButton;
 }
 
-function displayTagObjectSelection(button, selectedTag){
-	let objectSet;
-	switch(button.textContent){
-		case 'Project': objectSet = projects.collection; break;
-		case 'Category': objectSet = categories.collection; break;
-	}
+function submitAddTag(selectedTag){
+	if(selectedTag.listing){
+		addTag(selectedTag.listing.tagObject.createTag());
+		document.querySelector('.popup-window-container').close();
+	}	
+}
 
+function displayTagObjectSelection(objectSet, selectedTag){
 	let displayList = document.createElement('div');
 	displayList.classList.add('tag-selection-list');
 
@@ -144,22 +160,28 @@ function displayTagObjectSelection(button, selectedTag){
 	let objectList = Array.from(objectSet)
 						.filter(obj => !hasTag(parentObject, obj));
 
-	for(let tagObject of objectList){
-		let objectListing = document.createElement('div');
-		objectListing.classList.add('tag-object-listing');
-		objectListing.tagObject = tagObject;
-		objectListing.textContent = tagObject.title;
-		objectListing.addEventListener('click', () => {
-			if(selectedTag.listing){
-				selectedTag.listing.setAttribute('selected', false);
-			}
-			objectListing.setAttribute('selected', true);
-			selectedTag.listing = objectListing;
-		});
-		displayList.appendChild(objectListing);
-	}
+	objectList.map(obj => createTagListing(obj, displayList, selectedTag));
 
 	return displayList;
+}
+
+function createTagListing(tagObject, displayList, selectedTag){
+	let objectListing = document.createElement('div');
+	objectListing.classList.add('tag-object-listing');
+	objectListing.tagObject = tagObject;
+	objectListing.textContent = tagObject.title;
+	objectListing.addEventListener('click', () => selectListing(objectListing, selectedTag));
+	displayList.appendChild(objectListing);
+
+	return objectListing;
+}
+
+function selectListing(objectListing, selectedTag){
+	if(selectedTag.listing){
+		selectedTag.listing.setAttribute('selected', false);
+	}
+	objectListing.setAttribute('selected', true);
+	selectedTag.listing = objectListing;
 }
 
 function addTag(tag){
@@ -170,6 +192,7 @@ function addTag(tag){
 }
 
 function hasTag(parentObject, tagObject){
+	if(tagObject === parentObject) return true;
 	return parentObject.tags.list()
 							.some(existingTag => {
 								return existingTag.id === tagObject;
