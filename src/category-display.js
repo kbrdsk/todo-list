@@ -1,4 +1,4 @@
-import {displayTodoList} from './todo-list-display.js';
+import {displayTodoList, displayAddTodoWindow} from './todo-list-display.js';
 import {createAddButton, todos, projects} from './index.js';
 import {category} from './todo.js';
 
@@ -16,7 +16,7 @@ function displayCategory(category){
 	title.value = category.title;
 
 	main.appendChild(displayTodoList(category.todoList.list()));
-	main.appendChild(createAddButton(addTodo(category)));
+	main.appendChild(createAddButton(displayAddTodoWindow));
 
 }
 

@@ -1,4 +1,4 @@
-import {displayTodoList} from './todo-list-display.js';
+import {displayTodoList, displayAddTodoWindow} from './todo-list-display.js';
 import {createAddButton, todos, projects} from './index.js';
 import {contact} from './todo.js';
 
@@ -14,7 +14,7 @@ function displayContactWindow(contact){
 
 	main.appendChild(displayContactInfo(contact));
 	main.appendChild(displayTodoList(contact.todoList.list()));
-	main.appendChild(createAddButton(addTodo(contact)));
+	main.appendChild(createAddButton(displayAddTodoWindow));
 
 }
 
