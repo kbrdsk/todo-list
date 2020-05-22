@@ -1,4 +1,4 @@
-import {createAddButton} from './index.js';
+import {createAddButton, contacts} from './index.js';
 
 function displayContacts(contactList){
 	let main = document.querySelector('main');
@@ -20,6 +20,7 @@ function displayContacts(contactList){
 function displayContact(contact){
 	let listing = document.createElement('div');
 	listing.classList.add('contact-listing');
+	listing.contact = contact;
 
 	let name = document.createElement('a');
 	name.textContent = contact.contactName.last +
@@ -28,6 +29,7 @@ function displayContact(contact){
 	name.addEventListener('click', () => contact.display());
 
 	listing.appendChild(name);
+	listing.appendChild(deleteButton(listing));
 
 	return listing;
 }
@@ -37,6 +39,20 @@ function addContact(contactList){
 		contactList.collection.add(contactList.itemGenerator());
 		displayContacts(contactList);
 	}
+}
+
+function deleteButton(listing){
+	let button = document.createElement('button');
+	button.classList.add('collection-item-delete-button');
+	button.textContent = 'Delete';
+	button.addEventListener('click', () => deleteListing(listing));
+
+	return button;
+}
+
+function deleteListing(listing){
+	contacts.delete(listing.contact);
+	document.querySelector('.contacts-container').removeChild(listing);
 }
 
 export {displayContacts};
