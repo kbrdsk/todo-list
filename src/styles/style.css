@@ -151,7 +151,6 @@ main[displaying=collection]{
 	background-color: var(--color-1);
 	height: 20vh;
 	width: 25vw;
-	max-width: 25vw;
 	padding: 1vw;
 	border-radius: 10%;
 	overflow: hidden;
@@ -187,6 +186,11 @@ body[editing=false] .collection-item-delete-button{
 }
 .collection-item-favorite[is-favorite = true]{
 	background-color: gold;
+}
+
+.collection-item-preview{
+	overflow-wrap: break-word;
+	overflow: hidden;
 }
 
 .tag-container {
