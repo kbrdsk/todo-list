@@ -35,5 +35,3 @@ function addTodoItem(projectItem){
 project.proto.display = function (){
 	displayProject(this);
 }
-
-/*export {displayProject};*/

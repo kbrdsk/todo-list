@@ -1,6 +1,8 @@
 import {todo, project, category, contact} from './todo.js';
-import {displayCollection, createCollection} from './collection-display.js';
+import {displayCollection} from './collection-display.js';
 import {displayContacts} from './contact-list-display.js';
+import {createCollection} from './collection.js';
+import {save, load, initializeStorage} from './storage.js';
 import './project-display.js';
 import './contact-display.js';
 import './category-display.js';
@@ -11,7 +13,7 @@ import './styles/style.css';
 let projects = createCollection(project),
 	categories = createCollection(category),
 	contacts = createCollection(contact),
-	todos = createCollection(todo);
+	todos = createCollection(todo);	
 
 let body = document.querySelector('body'),
 	header = document.querySelector('header'),
@@ -132,8 +134,10 @@ function createAddButton(addFunction){
 
 
 //initialize
-
+initializeStorage();
 openCollectionWindow(projects);
+setInterval(save, 5000);
+load(prompt('Enter data string'));
 
 
 //exports

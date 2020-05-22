@@ -1,6 +1,3 @@
-/*import {displayProject} from './project.js';
-import {displayCategory} from './category-display.js';*/
-
 function displayCollection(collection){
 	let itemSet = collection.collection;
 	let main = document.querySelector('main');
@@ -64,24 +61,9 @@ function displayItem(item){
 	return itemDisplay;
 }
 
-/*function displayItemWindow(item){
-	if(item.createTag().tagType === 'project') displayProject(item);
-	if(item.createTag().tagType === 'category') displayCategory(item);
-}*/
-
 function toggleFavorite(display, item){
 	item.favorite = !item.favorite;
 	display.setAttribute('is-favorite', item.favorite);
 }
 
-function createCollection(itemGenerator){
-	let collection = new Set();
-	let extendedGenerator = (...args) => {
-		let newItem = itemGenerator(...args);
-		collection.add(newItem);
-		return newItem;
-	}
-	return {collection, itemGenerator: extendedGenerator};
-}
-
-export {displayCollection, createCollection};
+export {displayCollection};

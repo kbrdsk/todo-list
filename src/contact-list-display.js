@@ -1,5 +1,4 @@
 import {createAddButton} from './index.js';
-/*import {displayContactWindow} from './contact-display.js';*/
 
 function displayContacts(contactList){
 	let main = document.querySelector('main');
