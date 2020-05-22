@@ -4,7 +4,8 @@ function save(){
 	let collectionsArray = [todos, projects, categories, contacts];
 	let packedArray = collectionsArray.map(packCollection);
 	let dataString = JSON.stringify(packedArray);
-	console.log(dataString);
+	localStorage.todoDataString = dataString;
+	console.log('Saved');
 }
 
 function packCollection(collection){
@@ -47,7 +48,6 @@ function load(dataString){
 	if(!dataString) return;
 
 	let dataArray = JSON.parse(dataString);
-	console.log(dataArray);
 
 	dataArray[0].map(obj => loadObject(obj, todos));
 	dataArray[1].map(obj => loadObject(obj, projects));
