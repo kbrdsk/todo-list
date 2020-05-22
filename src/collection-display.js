@@ -6,9 +6,14 @@ function displayCollection(collection){
 	tagContainer.innerHTML = '';
 
 	main.setAttribute('displaying', 'collection');
+	document.querySelector('body').toggleEditing = toggleCollectionEdit;
 
 	for(let item of itemSet){
 		main.appendChild(displayItem(item));
+	}
+
+	for(let displayItem of document.getElementsByClassName('collection-item-display')){
+		displayItem.appendChild(deleteButton(displayItem, collection));
 	}
 
 	let addButton = createAddButton(collection);
@@ -34,6 +39,7 @@ function addItem(collection){
 function displayItem(item){
 	let itemDisplay = document.createElement('div');
 	itemDisplay.classList.add('collection-item-display');
+	itemDisplay.item = item;
 
 	let title = document.createElement('h3');
 	title.classList.add('collection-item-title');
@@ -64,6 +70,38 @@ function displayItem(item){
 function toggleFavorite(display, item){
 	item.favorite = !item.favorite;
 	display.setAttribute('is-favorite', item.favorite);
+}
+
+function toggleCollectionEdit(){
+	if(body.editing) stopEditMode();
+	if(!body.editing) startEditMode();
+
+}
+
+function startEditMode(){
+	body.editing = true;
+	body.setAttribute('editing', true);
+
+}
+
+function stopEditMode(){
+	body.editing = false;
+	body.setAttribute('editing', false);
+
+}
+
+function deleteButton(listing, collection){
+	let button = document.createElement('button');
+	button.classList.add('collection-item-delete-button');
+	button.textContent = 'Delete';
+	button.addEventListener('click', () => deleteListing(listing, collection));
+
+	return button;
+}
+
+function deleteListing(listing, collection){
+	collection.delete(listing.item);
+	document.querySelector('main').removeChild(listing);
 }
 
 export {displayCollection};

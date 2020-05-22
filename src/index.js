@@ -132,9 +132,9 @@ function createAddButton(addFunction){
 	return addButton;
 }
 
-
 //initialize
 initializeStorage();
+body.editing = false;
 setInterval(save, 5000);
 load(prompt('Enter data string'));
 openCollectionWindow(projects);

@@ -149,7 +149,7 @@ main[displaying=collection]{
 	flex-direction: column;
 	justify-content: flex-start;
 	margin: 2vw;
-	background-color: var(--color-3);
+	background-color: var(--color-1);
 	height: 20vh;
 	width: 25vw;
 	padding: 1vw;
