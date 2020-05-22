@@ -222,7 +222,7 @@ body[editing=false] .collection-item-delete-button{
 	left: 0;
 }
 
-.add-tag-window{
+.add-tag-window, .add-todo-window{
 	height: 50vh;
 	width: 50vw;
 	position: absolute;
@@ -237,7 +237,7 @@ body[editing=false] .collection-item-delete-button{
 	grid-template-columns: 1fr 1fr;
 }
 
-.add-tag-nav-button{
+.add-tag-nav-button, .add-todo-nav-button{
 	font-size: 3vw;
 	height: auto;
 	width: auto;
@@ -268,11 +268,13 @@ body[editing=false] .collection-item-delete-button{
 .type-select-container{
 	grid-area: tag-selection;
 	display: flex;
+	max-width: 50vw;
 	justify-content: space-between;
 	align-items: center;
+	flex-wrap: wrap;
 }
 
-.tag-selection-list{
+.tag-selection-list, .todo-selection-list{
 	background: #fff;
 	height: 35vh;
 	width: 35vw;
@@ -289,7 +291,7 @@ body[editing=false] .collection-item-delete-button{
 	background-color: #eee;
 }
 
-.tag-type-select-button{
+.tag-type-select-button, .todo-type-select-button{
 	font-size: 4vw;
 	margin: 3vw;
 	padding: 2vh 2vw;

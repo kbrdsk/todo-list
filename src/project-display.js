@@ -1,6 +1,6 @@
 import {project} from './todo.js'; 
 import {projects, todos, createAddButton} from './index.js';
-import {displayTodoList} from './todo-list-display.js';
+import {displayTodoList, displayAddTodoWindow} from './todo-list-display.js';
 import {displayDescription} from './todo-display.js';
 import {displayTags} from './tag-display.js';
 
@@ -20,7 +20,7 @@ function displayProject(projectItem){
 
 	main.appendChild(displayDescription(projectItem));
 	main.appendChild(todoListDisplay);
-	main.appendChild(createAddButton(() => addTodoItem(projectItem)));
+	main.appendChild(createAddButton(displayAddTodoWindow));
 
 	tagContainer.innerHTML = '';
 	tagContainer.appendChild(displayTags(projectItem.tags.list()));
