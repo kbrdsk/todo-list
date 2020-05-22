@@ -145,15 +145,16 @@ main[displaying=collection]{
 }
 
 .collection-item-display{
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
 	margin: 2vw;
 	background-color: var(--color-1);
 	height: 20vh;
 	width: 25vw;
+	max-width: 25vw;
 	padding: 1vw;
 	border-radius: 10%;
+	overflow: hidden;
 }
 
 .collection-item-header{
@@ -161,9 +162,19 @@ main[displaying=collection]{
 	justify-content: space-between;
 	padding: 1vw;
 	height: 4vw;
+	width: 23vw;
 	font-size: 3.5vw;
 }
 
+.collection-item-delete-button{
+	position: relative;
+	font-size: 2.5vw;
+	background-color: #FF5C5C;
+	width: 27vw;
+	padding: 1vw;
+	bottom: -1vw;
+	left: -1vw;
+}
 
 .collection-item-favorite{
 	height: 3.5vw;

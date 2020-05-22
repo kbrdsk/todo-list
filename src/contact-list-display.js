@@ -43,7 +43,7 @@ function addContact(contactList){
 
 function deleteButton(listing){
 	let button = document.createElement('button');
-	button.classList.add('collection-item-delete-button');
+	button.classList.add('contact-listing-delete-button');
 	button.textContent = 'Delete';
 	button.addEventListener('click', () => deleteListing(listing));
 
