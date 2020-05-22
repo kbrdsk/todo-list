@@ -135,9 +135,9 @@ function createAddButton(addFunction){
 
 //initialize
 initializeStorage();
-openCollectionWindow(projects);
 setInterval(save, 5000);
 load(prompt('Enter data string'));
+openCollectionWindow(projects);
 
 
 //exports

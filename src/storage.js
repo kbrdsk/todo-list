@@ -8,26 +8,27 @@ function save(){
 }
 
 function packCollection(collection){
-	let packedObjects = Array.from(collection.collection);
-	if(collection !== todos){
-		packedObjects = packedObjects.map(obj => packObject(obj, collection));
-	} 
+	let packedObjects = Array.from(collection.collection)
+							.map(obj => packObject(obj, collection));
 	return packedObjects;
 }
 
 function packObject(todoListObject){
 	let packedObject = Object.assign({}, todoListObject);
-	packedObject.todoListStorageData = todoListObject.todoList.list()
+	if(todoListObject.todoList){
+		packedObject.todoListStorageData = todoListObject.todoList.list()
 												   .map(todo => todo.storageId);
+	}
+
+	for(let packedProperty of ['todoList', 'tags', 'dueDate', 'scheduleDate', 'createTag']){
+		delete packedObject[packedProperty];
+	}
+
 	return packedObject;
 }
 
 
 function initializeStorage(){
-	todos.readyFields = ['title', 'description', 'todoListStorageData', 'storageId'];
-	projects.readyFields = ['title', 'description', 'todoListStorageData', 'storageId'];
-	categories.readyFields =['title', 'description', 'todoListStorageData', 'storageId'];
-	contacts.readyFields = [];
 }
 
 function loadTodoList(loadingObject, todoObjectArray){
@@ -39,12 +40,12 @@ function loadTodoList(loadingObject, todoObjectArray){
 
 function loadObject(dataObject, collection){
 	let object = collection.itemGenerator();
-	for(let field of collection.readyFields){
-		object[field] = dataObject[field];
-	};
+	Object.assign(object, dataObject);
 }
 
 function load(dataString){
+	if(!dataString) return;
+
 	let dataArray = JSON.parse(dataString);
 	console.log(dataArray);
 
