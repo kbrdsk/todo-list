@@ -166,6 +166,10 @@ main[displaying=collection]{
 	font-size: 3.5vw;
 }
 
+body[editing=false] .collection-item-delete-button{
+	display: none;
+}
+
 .collection-item-delete-button{
 	position: relative;
 	font-size: 2.5vw;

@@ -57,7 +57,7 @@ navMenu.setAttribute('showing', 'false');
 
 editLink.classList.add('nav-link');
 editLink.textContent = 'Edit';
-editLink.addEventListener('click', openEditWindow);
+editLink.addEventListener('click', () => body.toggleEditing());
 
 categoriesLink.classList.add('nav-link');
 categoriesLink.textContent = 'Categories';
@@ -135,6 +135,7 @@ function createAddButton(addFunction){
 //initialize
 initializeStorage();
 body.editing = false;
+body.setAttribute('editing', 'false');
 setInterval(save, 5000);
 load(localStorage.getItem('todoDataString'));
 //load(prompt('Enter data string'));

@@ -1,4 +1,5 @@
 function displayCollection(collection){
+	stopEditMode();
 	let itemSet = collection.collection;
 	let main = document.querySelector('main');
 	let tagContainer = document.querySelector('.tag-display-container');
@@ -73,18 +74,21 @@ function toggleFavorite(display, item){
 }
 
 function toggleCollectionEdit(){
+	let body = document.querySelector('body');
 	if(body.editing) stopEditMode();
-	if(!body.editing) startEditMode();
+	else if(!body.editing) startEditMode();
 
 }
 
 function startEditMode(){
+	let body = document.querySelector('body');
 	body.editing = true;
 	body.setAttribute('editing', true);
 
 }
 
 function stopEditMode(){
+	let body = document.querySelector('body');
 	body.editing = false;
 	body.setAttribute('editing', false);
 
