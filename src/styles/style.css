@@ -180,7 +180,8 @@ main[displaying=collection]{
 
 body[editing=false] .collection-item-delete-button,
 body[editing=false] .tag-delete-button,
-body[editing=false] .todo-delete-button{
+body[editing=false] .todo-delete-button,
+body[editing=false] .contact-listing-delete-button{
 	display: none;
 }
 
@@ -330,4 +331,15 @@ body[editing=false] .todo-delete-button{
 	font-size: 4vw;
 	margin: 3vw;
 	padding: 2vh 2vw;
+}
+
+.contact-listing-delete-button{
+	background: var(--soft-red);
+	align-self: center;
+	margin-left: 5vw;
+}
+
+.contact-listing{
+	display: flex;
+	margin: 2vw;
 }

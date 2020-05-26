@@ -6,7 +6,9 @@ function displayTags(tags){
 	let container = document.createElement('div');
 	container.classList.add('tag-container');
 	for(let tag of tags){
-		container.appendChild(displayTagItem(tag));
+		if(tag.tagType !== 'contact'){
+			container.appendChild(displayTagItem(tag));
+		}
 	}
 
 	container.appendChild(addTagButton());
