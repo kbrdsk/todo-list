@@ -89,11 +89,21 @@ function createAddWindow(receiverFunc){
 		let item = obj => receiverFunc(currentObject, obj).item;
 	
 		let objectList = Array.from(objectSet)
-							.filter(obj => !hasTodo(parent(obj), item(obj)));
+							.filter(obj => addableObject(parent(obj), item(obj)));
 	
 		objectList.map(obj => createItemListing(obj, displayList, selectedItem));
 	
 		return displayList;
+	}
+
+	function addableObject(parent, item){
+		let looping = false;
+		if(item.createTag
+			&& item.createTag().tagType === 'project'
+			&& parent.createTag().tagType === 'project'){
+			looping = parent.isChild(item);
+		}
+		return !looping && !hasTodo(parent, item);
 	}
 
 	function createBackButton(){

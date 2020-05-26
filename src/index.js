@@ -136,7 +136,7 @@ function createAddButton(addFunction){
 initializeStorage();
 body.editing = false;
 body.setAttribute('editing', 'false');
-setInterval(save, 5000);
+//setInterval(save, 5000);
 load(localStorage.getItem('todoDataString'));
 //load(prompt('Enter data string'));
 openCollectionWindow(projects);

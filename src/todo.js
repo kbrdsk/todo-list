@@ -46,14 +46,14 @@ function project(projectName = 'New Project'){
 
 	todoList.add = (proj) => {
 		if(Object.getPrototypeOf(proj) === project.proto
-			&& isChild(proj)){
+			&& projectObj.isChild(proj)){
 			throw 'Looping projects';
 		} 
 		_todoList.add(proj);
 	}
 
 	function isChild(project){	
-		let projects = tags.list().filter(tag => tag.tagType === 'project');
+		let projects = this.tags.list().filter(tag => tag.tagType === 'project');
 		if(!projects) return false;
 		if(projects.some(proj => proj.id === project)) return true;
 		if(projects.some(proj => proj.id.isChild(project))) return true;
