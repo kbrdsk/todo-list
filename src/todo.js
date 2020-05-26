@@ -44,12 +44,12 @@ function project(projectName = 'New Project'){
 		todoList = Object.create(_todoList),
 		createTag = tagGenerator('project').bind(projectObj);
 
-	todoList.add = (project) => {
-		if(Object.getPrototypeOf(project) === project.proto
-			&& isChild(project)){
+	todoList.add = (proj) => {
+		if(Object.getPrototypeOf(proj) === project.proto
+			&& isChild(proj)){
 			throw 'Looping projects';
 		} 
-		_todoList.add(project);
+		_todoList.add(proj);
 	}
 
 	function isChild(project){	
