@@ -237,7 +237,23 @@ body[editing=false] .collection-item-delete-button{
 	grid-template-columns: 1fr 1fr;
 }
 
-.add-tag-nav-button, .add-todo-nav-button{
+.add-window{
+	height: 50vh;
+	width: 50vw;
+	position: absolute;
+	top: 25vh;
+	left: 25vw;
+	background-color: var(--color-4);
+	display: grid;
+	grid-template-areas: 
+	'tag-selection tag-selection'
+	'new-item      new-item     '
+	'back-button   select-button';
+	grid-template-rows: 1fr auto;
+	grid-template-columns: 1fr 1fr;	
+}
+
+.add-tag-nav-button, .add-todo-nav-button, .add-nav-button{
 	font-size: 3vw;
 	height: auto;
 	width: auto;
@@ -274,7 +290,16 @@ body[editing=false] .collection-item-delete-button{
 	flex-wrap: wrap;
 }
 
-.tag-selection-list, .todo-selection-list{
+.new-item-container{
+	grid-area: new-item;
+	display: flex;
+	max-width: 50vw;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.tag-selection-list, .todo-selection-list, .selection-list{
 	background: #fff;
 	height: 35vh;
 	width: 35vw;
@@ -291,7 +316,7 @@ body[editing=false] .collection-item-delete-button{
 	background-color: #eee;
 }
 
-.tag-type-select-button, .todo-type-select-button{
+.tag-type-select-button, .todo-type-select-button, .type-select-button{
 	font-size: 4vw;
 	margin: 3vw;
 	padding: 2vh 2vw;

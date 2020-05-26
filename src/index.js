@@ -140,6 +140,7 @@ setInterval(save, 5000);
 load(localStorage.getItem('todoDataString'));
 //load(prompt('Enter data string'));
 openCollectionWindow(projects);
+//console.log(localStorage.getItem('todoDataString'));
 
 
 //exports

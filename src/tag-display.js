@@ -1,4 +1,5 @@
 import {categories, projects} from './index.js';
+import {createAddWindow} from './display-add-window.js';
 
 //creates DOM structure for tag display
 function displayTags(tags){
@@ -45,6 +46,22 @@ function addTagButton(){
 }
 
 function displayAddTagWindow(){
+	let receiverFunc = (current, selected) => {
+		return {receiver: selected, item:current};
+	}
+
+	let addWindow = createAddWindow(receiverFunc);
+	Object.assign(addWindow.typeSelectors, 
+			{'Category': categories, 'Project': projects});
+	/*Object.assign(addWindow.newItems,
+			{'New Todo': todos, 'New Project': projects});*/
+
+	addWindow.display();
+}
+
+
+
+/*function displayAddTagWindow(){
 	let addTagWindowContainer = document.createElement('div');
 	addTagWindowContainer.classList.add('popup-window-container');
 	addTagWindowContainer.close = () => {
@@ -65,7 +82,7 @@ function displayAddTagWindow(){
 	addTagWindowContainer.appendChild(addTagWindow);
 	document.querySelector('body').appendChild(addTagWindowContainer);
 	displayTypeSelectWindow();
-}
+}*/
 
 function createCloseButton(closeFunction){
 	let closeButton = document.createElement('div');
