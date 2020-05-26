@@ -114,7 +114,14 @@ main{
     border-radius: 15%;
 }
 
+.todo-delete-button{
+	background: var(--soft-red);
+	align-self: center;
+	margin-left: 5vw;
+}
+
 .todo-listing{
+	position: relative;
 	display: flex;
 	margin: 3vw 0;
 }

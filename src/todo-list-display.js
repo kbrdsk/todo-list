@@ -30,12 +30,31 @@ function displayTodoItem(item){
 	let dueWarning = document.createElement('span');
 	dueWarning.classList.add('due-warning');
 
+	let deleteButton = createDeleteButton(item);
 
-	for(let listingElement of [checkBox, dueWarning, title]){
+
+	for(let listingElement of [checkBox, dueWarning, title, deleteButton]){
 		listing.appendChild(listingElement);
 	}
 
 	return listing;
+}
+
+function createDeleteButton(todo){
+	let button = document.createElement('button');
+	button.classList.add('todo-delete-button');
+	button.textContent = 'delete';
+	button.addEventListener('click', () => deleteTodo(todo));
+
+	return button;
+}
+
+function deleteTodo(todo){
+	let currentObject = document.querySelector('.window-title').activeObject;
+	currentObject.todoList.remove(todo);
+	let tag = todo.tags.list().filter(tag => tag.id === currentObject)[0];
+	todo.tags.remove(tag);
+	currentObject.display();
 }
 
 function toggleTodoFinished(listing, checkBox){
