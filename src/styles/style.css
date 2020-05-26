@@ -5,6 +5,7 @@
 	--color-4: #7AF5F5;
 	--color-5: #34DDDD;
 	--color-6: #93E2D5;
+	--soft-red: #FF5C5C;
 }
 
 /*https://www.colorcombos.com/color-schemes/172/ColorCombo172.html*/
@@ -165,14 +166,15 @@ main[displaying=collection]{
 	font-size: 3.5vw;
 }
 
-body[editing=false] .collection-item-delete-button{
+body[editing=false] .collection-item-delete-button,
+body[editing=false] .tag-delete-button{
 	display: none;
 }
 
 .collection-item-delete-button{
 	position: relative;
 	font-size: 2.5vw;
-	background-color: #FF5C5C;
+	background-color: var(--soft-red);
 	width: 27vw;
 	padding: 1vw;
 	bottom: -1vw;
@@ -211,6 +213,16 @@ body[editing=false] .collection-item-delete-button{
     z-index: 0;
     border-radius: 3vw;
     margin: 1.5vw 1.5vw;
+    display: flex;
+}
+
+.tag-delete-button{
+	display: block;
+	border-radius: 50%;
+	background-color: var(--soft-red);
+	align-self: center;
+	margin: 0 0 0 1vw;
+	padding: .7vw 1vw;
 }
 
 .popup-window-container{

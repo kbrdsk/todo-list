@@ -20,16 +20,40 @@ function displayTagItem(tag){
 	tagDisplay.classList.add('tag');
 	tagDisplay.setAttribute('type', tag.tagType);
 
-	let typeIcon = document.createElement('div');
+	tagDisplay.appendChild(createTypeIcon(tag.tagType));
+	tagDisplay.appendChild(createTitleDisplay(tag));
+	tagDisplay.appendChild(createDeleteButton(tag));
 
+	return tagDisplay;
+}
+
+function createTypeIcon(type){
+	return document.createElement('div');
+}
+
+function createTitleDisplay(tag){
 	let titleDisplay = document.createElement('a');
 	titleDisplay.textContent = tag.id.title || tag.id.contactName.first;
 	titleDisplay.addEventListener('click', () => tag.id.display());
 
-	tagDisplay.appendChild(typeIcon);
-	tagDisplay.appendChild(titleDisplay);
+	return titleDisplay;
+}
 
-	return tagDisplay;
+function createDeleteButton(tag){
+	let button = document.createElement('button');
+	button.classList.add('tag-delete-button');
+	button.textContent = 'X';
+	button.addEventListener('click', () => deleteTag(tag));
+
+	return button;
+}
+
+function deleteTag(tag){
+	let currentObject = document.querySelector('.window-title').activeObject;
+	let parentObject = tag.id;
+	parentObject.todoList.remove(currentObject);
+	currentObject.tags.remove(tag);
+	currentObject.display();
 }
 
 function addTagButton(){
