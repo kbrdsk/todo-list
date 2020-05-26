@@ -1,4 +1,5 @@
 import {todos, projects} from './index.js';
+import {createAddWindow} from './add-window-display.js';
 
 function displayTodoList(todoList){
 	let listDisplay = document.createElement('div');
@@ -43,13 +44,23 @@ function toggleTodoFinished(listing, checkBox){
 	listing.setAttribute('done', isDone);
 }
 
+function displayAddTodoWindow(){
+	let receiverFunc = (current, selected) => {
+		return {receiver: current, item:selected};
+	}
+	let addWindow = createAddWindow(receiverFunc);
+	Object.assign(addWindow.typeSelectors, 
+			{'Existing Todo': todos, 'Existing Project': projects});
+	Object.assign(addWindow.newItems,
+			{'New Todo': todos, 'New Project': projects});
+	addWindow.display();
+}
 
 
 
 
 
-
-
+/*
 function displayAddTodoWindow(){
 	let addTodoWindowContainer = document.createElement('div');
 	addTodoWindowContainer.classList.add('popup-window-container');
@@ -233,6 +244,6 @@ function hasTodo(parentObject, todoObject){
 							.some(existingTodo => {
 								return existingTodo === todoObject;
 							});
-}
+}*/
 
 export {displayTodoList, displayAddTodoWindow};

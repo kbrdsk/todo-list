@@ -1,5 +1,5 @@
 import {categories, projects} from './index.js';
-import {createAddWindow} from './display-add-window.js';
+import {createAddWindow} from './add-window-display.js';
 
 //creates DOM structure for tag display
 function displayTags(tags){
@@ -83,7 +83,7 @@ function displayAddTagWindow(){
 	document.querySelector('body').appendChild(addTagWindowContainer);
 	displayTypeSelectWindow();
 }*/
-
+/*
 function createCloseButton(closeFunction){
 	let closeButton = document.createElement('div');
 	closeButton.classList.add('close-button');
@@ -214,6 +214,6 @@ function hasTag(parentObject, tagObject){
 							.some(existingTag => {
 								return existingTag.id === tagObject;
 							});
-}
+}*/
 
 export{displayTags};
