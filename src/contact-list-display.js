@@ -5,6 +5,12 @@ function displayContacts(contactList){
 	main.innerHTML = '';
 	main.setAttribute('displaying', 'contact');
 
+	let title = document.querySelector('.window-title');
+	title.disabled = true;
+
+	let contactsButton = document.querySelector('.contacts-button');
+	contactsButton.disabled = true;
+
 	let tagContainer = document.querySelector('.tag-display-container');
 	tagContainer.innerHTML = '';
 

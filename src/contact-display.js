@@ -11,6 +11,10 @@ function displayContactWindow(contact){
 	title.value = contact.contactName.first +
 				' ' +
 				contact.contactName.last;
+	title.activeObject = contact;
+
+	let contactsButton = document.querySelector('.contacts-button');
+	contactsButton.disabled = false;
 
 	main.appendChild(displayContactInfo(contact));
 	main.appendChild(displayTodoList(contact.todoList.list()));
@@ -21,13 +25,6 @@ function displayContactWindow(contact){
 function displayContactInfo(contact){
 	let infoDisplay = document.createElement('div');
 	return infoDisplay;
-}
-
-function addTodo(contact){
-	return () => {
-		contact.todoList.add(todos.itemGenerator());
-		displayContactWindow(contact);
-	}
 }
 
 contact.proto.display = function (){

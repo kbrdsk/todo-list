@@ -7,10 +7,13 @@ import {displayTags} from './tag-display.js';
 function displayProject(projectItem){
 	let main = document.querySelector('main'),
 		title = document.querySelector('.window-title'),
-		tagContainer = document.querySelector('.tag-display-container');
+		tagContainer = document.querySelector('.tag-display-container'),
+		contactsButton = document.querySelector('.contacts-button');
 
 	main.setAttribute('displaying', 'project');
 	main.innerHTML = '';
+
+	contactsButton.disabled = false;
 
 	title.value = projectItem.title;
 	title.disabled = false;

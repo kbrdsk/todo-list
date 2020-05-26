@@ -52,7 +52,6 @@ function deleteTag(tag){
 	let currentObject = document.querySelector('.window-title').activeObject;
 	let parentObject = tag.id;
 	parentObject.todoList.remove(currentObject);
-	currentObject.tags.remove(tag);
 	currentObject.display();
 }
 

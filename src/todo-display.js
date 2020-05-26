@@ -4,10 +4,13 @@ import {todo} from './todo.js';
 function displayTodoWindow(todoItem){
 	let title = document.querySelector('.window-title'),
 		main = document.querySelector('main'),
-		tagContainer = document.querySelector('.tag-display-container');
+		tagContainer = document.querySelector('.tag-display-container'),
+		contactsButton = document.querySelector('.contacts-button');
 
 	main.innerHTML = '';
 	main.setAttribute('displaying', 'todo');
+
+	contactsButton.disabled = false;
 
 	title.value = todoItem.title;
 	title.disabled = false;

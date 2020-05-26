@@ -149,6 +149,9 @@ function createTodoList(creatingObj){
 			let index = todos.indexOf(todoItem);
 			todos = [...todos.slice(0, index), ...todos.slice(index + 1)];
 		}
+
+		let tag = todoItem.tags.list().find(tag => tag.id === creatingObj);
+		todoItem.tags.remove(tag);
 	}
 
 	let place = (todoItem, index) => {
@@ -177,7 +180,7 @@ function todoDate(){
 	let get = () => date;
 
 	let set = (setDate) => {
-		if(!isDate(setDate)) throw 'Must enter a vlid Date';
+		if(!isDate(setDate)) throw 'Must enter a valid Date';
 		date = setDate;
 	}
 

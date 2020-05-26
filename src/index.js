@@ -101,6 +101,7 @@ function closeNavMenu(){
 function openCollectionWindow(collection){
 	contactsButton.setAttribute('showing', 'false');
 	windowTitle.disabled = true;
+	contactsButton.disabled = true;
 	main.innerHTML = '';
 
 	let title = (collection === projects)? 'Projects': 'Categories';

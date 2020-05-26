@@ -52,8 +52,6 @@ function createDeleteButton(todo){
 function deleteTodo(todo){
 	let currentObject = document.querySelector('.window-title').activeObject;
 	currentObject.todoList.remove(todo);
-	let tag = todo.tags.list().filter(tag => tag.id === currentObject)[0];
-	todo.tags.remove(tag);
 	currentObject.display();
 }
 

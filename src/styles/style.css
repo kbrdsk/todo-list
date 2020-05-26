@@ -45,7 +45,12 @@ header{
 }
 
 .contacts-button{
+	display: block;
 	background-image: url('../images/contacts-icon.png');
+}
+
+.contacts-button[disabled]{
+	background: #fff;
 }
 
 .window-title{
@@ -174,7 +179,8 @@ main[displaying=collection]{
 }
 
 body[editing=false] .collection-item-delete-button,
-body[editing=false] .tag-delete-button{
+body[editing=false] .tag-delete-button,
+body[editing=false] .todo-delete-button{
 	display: none;
 }
 

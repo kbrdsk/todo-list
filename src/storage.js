@@ -6,7 +6,6 @@ function save(){
 	let dataString = JSON.stringify(packedArray);
 	localStorage.todoDataString = dataString;
 	console.log('Saved');
-	//console.log(dataString);
 }
 
 function packCollection(collection){
