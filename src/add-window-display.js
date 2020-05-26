@@ -158,8 +158,6 @@ function createCloseButton(closeFunction){
 	return closeButton;
 }
 
-
-
 function createItemListing(itemObject, displayList, selectedTag){
 	let objectListing = document.createElement('div');
 	objectListing.classList.add('tag-object-listing');
@@ -178,10 +176,6 @@ function hasTodo(parentObject, itemObject){
 								return existingTodo === itemObject;
 							});
 }
-
-
-
-
 
 function selectListing(objectListing, selectedItem){
 	if(selectedItem.listing){
