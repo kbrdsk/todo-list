@@ -46,10 +46,11 @@ function createInfoFieldDisplay(parentObj, fieldName, disabled) {
 	let fieldNameDisplay = document.createElement("span");
 	fieldNameDisplay.textContent =
 		fieldName[0].toUpperCase() + fieldName.slice(1) + ": ";
+	fieldNameDisplay.classList.add("contact-info-field-name");
 
 	let fieldContentDisplay = document.createElement("input");
 	fieldContentDisplay.classList.add("contact-info-field-content");
-	fieldContentDisplay.value = parentObj.fieldName;
+	fieldContentDisplay.value = parentObj[fieldName];
 	fieldContentDisplay.disabled = disabled;
 	fieldContentDisplay.addEventListener("change", () =>
 		updateField(contact, "fieldName", fieldContentDisplay)

@@ -343,3 +343,7 @@ body[editing=false] .contact-listing-delete-button{
 	display: flex;
 	margin: 2vw;
 }
+
+body[editing=false] .contact-info-field-name{
+	display: none;
+}
