@@ -344,6 +344,25 @@ body[editing=false] .contact-listing-delete-button{
 	margin: 2vw;
 }
 
+body[editing=false] .contact-info-display{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 body[editing=false] .contact-info-field-name{
 	display: none;
+}
+
+.contact-info-field-content{
+	font-size: 2.5vw;
+	border: none;
+	border-bottom: solid 1px;
+	background: #fff;
+}
+
+body[editing=false] .contact-info-field-content{
+	border: none;
+	text-align: center;
+	font-color: #555;
 }
