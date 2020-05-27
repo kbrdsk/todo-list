@@ -1,37 +1,29 @@
-import {displayTodoList, displayAddTodoWindow} from './todo-list-display.js';
-import {createAddButton, todos, projects} from './index.js';
-import {category} from './todo.js';
+import { displayTodoList, displayAddTodoWindow } from "./todo-list-display.js";
+import { createAddButton } from "./index.js";
+import { category } from "./todo.js";
 
-function displayCategory(category){
-	let main = document.querySelector('main');
-	main.innerHTML = '';
-	main.setAttribute('displaying', 'category');
-	let tagContainer = document.querySelector('.tag-display-container');
+function displayCategory(category) {
+	let main = document.querySelector("main");
+	main.innerHTML = "";
+	main.setAttribute("displaying", "category");
+	let tagContainer = document.querySelector(".tag-display-container");
 
-	tagContainer.innerHTML = '';
+	tagContainer.innerHTML = "";
 
-	let title = document.querySelector('.window-title');
+	let title = document.querySelector(".window-title");
 	title.activeObject = category;
 	title.disabled = false;
 	title.value = category.title;
 
-	let contactsButton = document.querySelector('.contacts-button');
+	let contactsButton = document.querySelector(".contacts-button");
 	contactsButton.disabled = false;
 
 	main.appendChild(displayTodoList(category.todoList.list()));
 	main.appendChild(createAddButton(displayAddTodoWindow));
-
 }
 
-function addTodo(category){
-	return () => {
-		category.todoList.add(todos.itemGenerator());
-		displayCategory(category);
-	}
-}
-
-category.proto.display = function (){
+category.proto.display = function () {
 	displayCategory(this);
-}
+};
 
 /*export {displayCategory};*/

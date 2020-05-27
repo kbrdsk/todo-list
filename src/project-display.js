@@ -1,17 +1,17 @@
-import {project} from './todo.js'; 
-import {projects, todos, createAddButton} from './index.js';
-import {displayTodoList, displayAddTodoWindow} from './todo-list-display.js';
-import {displayDescription} from './todo-display.js';
-import {displayTags} from './tag-display.js';
+import { project } from "./todo.js";
+import { createAddButton } from "./index.js";
+import { displayTodoList, displayAddTodoWindow } from "./todo-list-display.js";
+import { displayDescription } from "./todo-display.js";
+import { displayTags } from "./tag-display.js";
 
-function displayProject(projectItem){
-	let main = document.querySelector('main'),
-		title = document.querySelector('.window-title'),
-		tagContainer = document.querySelector('.tag-display-container'),
-		contactsButton = document.querySelector('.contacts-button');
+function displayProject(projectItem) {
+	let main = document.querySelector("main"),
+		title = document.querySelector(".window-title"),
+		tagContainer = document.querySelector(".tag-display-container"),
+		contactsButton = document.querySelector(".contacts-button");
 
-	main.setAttribute('displaying', 'project');
-	main.innerHTML = '';
+	main.setAttribute("displaying", "project");
+	main.innerHTML = "";
 
 	contactsButton.disabled = false;
 
@@ -26,16 +26,10 @@ function displayProject(projectItem){
 
 	main.appendChild(createAddButton(displayAddTodoWindow));
 
-	tagContainer.innerHTML = '';
+	tagContainer.innerHTML = "";
 	tagContainer.appendChild(displayTags(projectItem.tags.list()));
 }
 
-function addTodoItem(projectItem){
-	let newTodo = todos.itemGenerator();
-	projectItem.todoList.add(newTodo);
-	displayProject(projectItem);
-}
-
-project.proto.display = function (){
+project.proto.display = function () {
 	displayProject(this);
-}
+};
