@@ -29,11 +29,11 @@ function displayContactInfo(contact) {
 	let infoDisplay = document.createElement("div");
 	infoDisplay.classList.add("contact-info-display");
 
-	let emailDisplay = createEmailDisplay(contact);
+	let emailDisplay = createInfoFieldDisplay(contact, "email", true);
 
-	let phoneDisplay = createPhoneDisplay(contact);
+	let phoneDisplay = createInfoFieldDisplay(contact, "phone", true);
 
-	let orgDisplay = createOrgDisplay(contact);
+	let orgDisplay = createInfoFieldDisplay(contact, "organization", true);
 
 	for (let infoField of [orgDisplay, phoneDisplay, emailDisplay]) {
 		infoDisplay.appendChild(infoField);
@@ -42,62 +42,28 @@ function displayContactInfo(contact) {
 	return infoDisplay;
 }
 
-function createEmailDisplay(contact) {
-	let emailDisplay = document.createElement("input");
-	emailDisplay.classList.add("contact-email-display");
-	emailDisplay.value = contact.email;
-	emailDisplay.disabled = true;
-	emailDisplay.addEventListener("change", () =>
-		updateField(contact, "email", emailDisplay)
+function createInfoFieldDisplay(parentObj, fieldName, disabled) {
+	let fieldNameDisplay = document.createElement("span");
+	fieldNameDisplay.textContent =
+		fieldName[0].toUpperCase() + fieldName.slice(1) + ": ";
+
+	let fieldContentDisplay = document.createElement("input");
+	fieldContentDisplay.classList.add("contact-info-field-content");
+	fieldContentDisplay.value = parentObj.fieldName;
+	fieldContentDisplay.disabled = disabled;
+	fieldContentDisplay.addEventListener("change", () =>
+		updateField(contact, "fieldName", fieldContentDisplay)
 	);
 
-	return emailDisplay;
-}
+	let fieldDisplay = document.createElement("div");
+	fieldDisplay.classList.add(`contact-${fieldName}-display`);
+	fieldDisplay.classList.add("contact-info-field-display");
 
-function createPhoneDisplay(contact) {
-	let phoneDisplay = document.createElement("input");
-	phoneDisplay.classList.add("contact-phone-display");
-	phoneDisplay.value = contact.phone;
-	phoneDisplay.disabled = true;
-	phoneDisplay.addEventListener("change", () =>
-		updateField(contact, "phone", phoneDisplay)
-	);
+	for (let element of [fieldNameDisplay, fieldContentDisplay]) {
+		fieldDisplay.appendChild(element);
+	}
 
-	return phoneDisplay;
-}
-
-function createOrgDisplay(contact) {
-	let orgDisplay = document.createElement("input");
-	orgDisplay.classList.add("contact-org-display");
-	orgDisplay.value = contact.organization;
-	orgDisplay.disabled = true;
-	orgDisplay.addEventListener("change", () =>
-		updateField(contact, "organization", orgDisplay)
-	);
-
-	return orgDisplay;
-}
-
-function createFirstNameDisplay(contact) {
-	let firstDisplay = document.createElement("input");
-	firstDisplay.classList.add("contact-first-display");
-	firstDisplay.value = contact.contactName.first;
-	firstDisplay.addEventListener("change", () =>
-		updateField(contact.contactName, "first", firstDisplay)
-	);
-
-	return firstDisplay;
-}
-
-function createLastNameDisplay(contact) {
-	let lastDisplay = document.createElement("input");
-	lastDisplay.classList.add("contact-last-display");
-	lastDisplay.value = contact.contactName.last;
-	lastDisplay.addEventListener("change", () =>
-		updateField(contact.contactName, "last", lastDisplay)
-	);
-
-	return lastDisplay;
+	return fieldDisplay;
 }
 
 function updateField(contact, fieldName, source) {
@@ -109,19 +75,26 @@ function toggleContactEdit() {
 	let contact = document.querySelector(".window-title").activeObject;
 	let editing = document.querySelector("body").editing;
 	if (editing) prependNameDisplays(contact);
-	else if (!editing){
+	else if (!editing) {
 		removeNameDisplays();
 		contact.display();
-	} 
-	document.querySelector(".contact-email-display").disabled = !editing;
-	document.querySelector(".contact-phone-display").disabled = !editing;
-	document.querySelector(".contact-org-display").disabled = !editing;
+	}
+
+	for (let field of document.getElementsByClassName(
+		"contact-info-field-content"
+	)) {
+		field.disabled = !editing;
+	}
 }
 
 function prependNameDisplays(contact) {
 	let infoContainer = document.querySelector(".contact-info-display");
-	infoContainer.prepend(createLastNameDisplay(contact));
-	infoContainer.prepend(createFirstNameDisplay(contact));
+	infoContainer.prepend(
+		createInfoFieldDisplay(contact.contactName, "last", false)
+	);
+	infoContainer.prepend(
+		createInfoFieldDisplay(contact.contactName, "first", false)
+	);
 }
 
 function removeNameDisplays() {
