@@ -1,6 +1,6 @@
 import { todo, project, category, contact } from "./todo.js";
 import { displayCollection } from "./collection-display.js";
-import { displayContacts } from "./contact-list-display.js";
+import { displayContacts, contactsButton } from "./contact-list-display.js";
 import { createCollection } from "./collection.js";
 import { save, load, initializeStorage } from "./storage.js";
 import "./project-display.js";
@@ -25,8 +25,7 @@ footer.classList.add("tag-display-container");
 //header
 
 let navButton = document.createElement("button"),
-	windowTitle = document.createElement("input"),
-	contactsButton = document.createElement("button");
+	windowTitle = document.createElement("input");
 
 windowTitle.setAttribute("type", "text");
 windowTitle.disabled = true;
@@ -38,7 +37,6 @@ function changeTitle(title) {
 
 navButton.classList.add("nav-button");
 windowTitle.classList.add("window-title");
-contactsButton.classList.add("contacts-button");
 
 for (let headerElement of [navButton, windowTitle, contactsButton]) {
 	header.appendChild(headerElement);

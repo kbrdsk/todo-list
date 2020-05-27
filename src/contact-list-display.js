@@ -14,13 +14,19 @@ function displayContacts(contactList) {
 	let tagContainer = document.querySelector(".tag-display-container");
 	tagContainer.innerHTML = "";
 
-	let contactsContainer = document.createElement("div");
-	contactsContainer.classList.add("contacts-container");
-	for (let contact of contactList.collection) {
-		contactsContainer.appendChild(displayContact(contact));
-	}
+	let contactsContainer = displayContactList(contactList.collection);
+
 	main.appendChild(contactsContainer);
 	main.appendChild(createAddButton(addContact(contactList)));
+}
+
+function displayContactList(contactList) {
+	let contactsContainer = document.createElement("div");
+	contactsContainer.classList.add("contacts-container");
+	for (let contact of contactList) {
+		contactsContainer.appendChild(displayContact(contact));
+	}
+	return contactsContainer;
 }
 
 function displayContact(contact) {
@@ -60,4 +66,24 @@ function deleteListing(listing) {
 	document.querySelector(".contacts-container").removeChild(listing);
 }
 
-export { displayContacts };
+function displayAssociatedContacts(parentObj) {
+	let contactList = parentObj.tags
+		.list()
+		.filter((tag) => tag.tagType === "contact")
+		.map((tag) => tag.id);
+
+	return displayContactList(contactList);
+}
+
+function toggleContactDisplay(){
+	let main = document.querySelector("main");
+	let displayingContacts = !main.displayingContacts;
+	main.setAttribute('displaying-contacts', displayingContacts);
+}
+
+let contactsButton = document.createElement("button");
+contactsButton.classList.add("contacts-button");
+contactsButton.addEventListener('click', toggleContactDisplay);
+
+
+export { displayContacts, displayAssociatedContacts, contactsButton };
