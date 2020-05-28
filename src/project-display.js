@@ -12,6 +12,8 @@ function displayProject(projectItem) {
 		contactsButton = document.querySelector(".contacts-button");
 
 	main.setAttribute("displaying", "project");
+	main.setAttribute("displaying-contacts", false);
+	main.displayingContacts = false;
 	main.innerHTML = "";
 
 	contactsButton.disabled = false;

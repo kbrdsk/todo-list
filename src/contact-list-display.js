@@ -77,8 +77,8 @@ function displayAssociatedContacts(parentObj) {
 
 function toggleContactDisplay(){
 	let main = document.querySelector("main");
-	let displayingContacts = !main.displayingContacts;
-	main.setAttribute('displaying-contacts', displayingContacts);
+	main.displayingContacts = !main.displayingContacts;
+	main.setAttribute('displaying-contacts', main.displayingContacts);
 }
 
 let contactsButton = document.createElement("button");

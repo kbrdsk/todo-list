@@ -366,3 +366,11 @@ body[editing=false] .contact-info-field-content{
 	text-align: center;
 	font-color: #555;
 }
+
+main[displaying-contacts=true] .todo-list{
+	display: none;
+}
+
+main[displaying-contacts=false] .contacts-container{
+	display: none;
+}

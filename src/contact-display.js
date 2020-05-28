@@ -13,7 +13,7 @@ function displayContactWindow(contact) {
 	title.activeObject = contact;
 
 	let contactsButton = document.querySelector(".contacts-button");
-	contactsButton.disabled = false;
+	contactsButton.disabled = true;
 
 	main.appendChild(displayContactInfo(contact));
 	main.appendChild(displayTodoList(contact.todoList.list()));

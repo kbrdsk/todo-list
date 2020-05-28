@@ -1,5 +1,6 @@
 import { displayTags } from "./tag-display.js";
 import { todo } from "./todo.js";
+import { displayAssociatedContacts } from "./contact-list-display.js";
 
 function displayTodoWindow(todoItem) {
 	let title = document.querySelector(".window-title"),
@@ -9,6 +10,8 @@ function displayTodoWindow(todoItem) {
 
 	main.innerHTML = "";
 	main.setAttribute("displaying", "todo");
+	main.setAttribute("displaying-contacts", false);
+	main.displayingContacts = false;
 
 	contactsButton.disabled = false;
 
@@ -17,6 +20,7 @@ function displayTodoWindow(todoItem) {
 	title.activeObject = todoItem;
 
 	main.appendChild(displayDescription(todoItem));
+	main.appendChild(displayAssociatedContacts(todoItem));
 
 	tagContainer.innerHTML = "";
 	tagContainer.appendChild(displayTags(todoItem.tags.list()));

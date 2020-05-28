@@ -16,7 +16,7 @@ function displayCategory(category) {
 	title.value = category.title;
 
 	let contactsButton = document.querySelector(".contacts-button");
-	contactsButton.disabled = false;
+	contactsButton.disabled = true;
 
 	main.appendChild(displayTodoList(category.todoList.list()));
 	main.appendChild(createAddButton(displayAddTodoWindow));
