@@ -1,9 +1,12 @@
+import { displayNewCollectionItemWindow } from "./add-window-display.js";
+
 function displayCollection(collection) {
 	stopEditMode();
 	let itemSet = collection.collection;
 	let main = document.querySelector("main");
 	let tagContainer = document.querySelector(".tag-display-container");
 
+	main.innerHTML = "";
 	tagContainer.innerHTML = "";
 
 	main.setAttribute("displaying", "collection");
@@ -27,16 +30,9 @@ function createAddButton(collection) {
 	let addButton = document.createElement("button");
 	addButton.classList.add("add-button");
 	addButton.textContent = "+";
-	addButton.addEventListener("click", () => addItem(collection));
+	addButton.addEventListener("click", () => displayNewCollectionItemWindow(collection));
 
 	return addButton;
-}
-
-function addItem(collection) {
-	let main = document.querySelector("main");
-	let newItem = collection.itemGenerator();
-	collection.collection.add(newItem);
-	main.appendChild(displayItem(newItem));
 }
 
 function displayItem(item) {

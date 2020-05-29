@@ -1,4 +1,5 @@
 import { createAddButton, contacts } from "./index.js";
+import { displayNewCollectionItemWindow } from "./add-window-display.js";
 
 function displayContacts(contactList) {
 	let main = document.querySelector("main");
@@ -18,7 +19,9 @@ function displayContacts(contactList) {
 	let contactsContainer = displayContactList(contactList.collection);
 
 	main.appendChild(contactsContainer);
-	main.appendChild(createAddButton(addContact(contactList)));
+	main.appendChild(
+		createAddButton(() => displayNewCollectionItemWindow(contactList))
+	);
 }
 
 function displayContactList(contactList) {
@@ -76,15 +79,14 @@ function displayAssociatedContacts(parentObj) {
 	return displayContactList(contactList);
 }
 
-function toggleContactDisplay(){
+function toggleContactDisplay() {
 	let main = document.querySelector("main");
 	main.displayingContacts = !main.displayingContacts;
-	main.setAttribute('displaying-contacts', main.displayingContacts);
+	main.setAttribute("displaying-contacts", main.displayingContacts);
 }
 
 let contactsButton = document.createElement("button");
 contactsButton.classList.add("contacts-button");
-contactsButton.addEventListener('click', toggleContactDisplay);
-
+contactsButton.addEventListener("click", toggleContactDisplay);
 
 export { displayContacts, displayAssociatedContacts, contactsButton };

@@ -1,4 +1,5 @@
 import { projects, categories, todos, contacts } from "./index.js";
+import { displayCollection } from "./collection-display.js";
 
 function initializeAddWindow() {
 	projects.newItemInfoFields = function () {
@@ -16,6 +17,16 @@ function initializeAddWindow() {
 		return {
 			title: document.createElement("input"),
 			description: document.createElement("textarea"),
+		};
+	};
+
+	contacts.newItemInfoFields = function () {
+		return {
+			first: document.createElement("input"),
+			last: document.createElement("input"),
+			phone: document.createElement("input"),
+			email: document.createElement("input"),
+			organization: document.createElement("input"),
 		};
 	};
 }
@@ -109,20 +120,6 @@ function createAddWindow(receiverFunc) {
 		let container = document.querySelector(".add-window");
 		container.appendChild(createBackButton());
 		container.appendChild(createDoneButton(collection, infoFields));
-	}
-
-	function createInfoField(fieldName, input) {
-		let infoFieldName = document.createElement("span");
-		infoFieldName.textContent = fieldName;
-		infoFieldName.classList.add("add-info-field-name");
-
-		input.classList.add("add-info-field-input");
-
-		let infoFieldContainer = document.createElement("div");
-		infoFieldContainer.appendChild(infoFieldName);
-		infoFieldContainer.appendChild(input);
-
-		return infoFieldContainer;
 	}
 
 	function createDoneButton(collection, infoFields) {
@@ -276,4 +273,56 @@ function selectListing(objectListing, selectedItem) {
 	selectedItem.listing = objectListing;
 }
 
-export { createAddWindow, initializeAddWindow };
+function displayNewCollectionItemWindow(collection) {
+	displayAddWindow();
+	let infoFields = collection.newItemInfoFields();
+
+	let typeSelectContainer = document.querySelector(".type-select-container");
+
+	typeSelectContainer.innerHTML = "";
+	document.querySelector(".new-item-container").innerHTML = "";
+
+	for (let field in infoFields) {
+		typeSelectContainer.appendChild(createInfoField(field, infoFields[field]));
+	}
+
+	let container = document.querySelector(".add-window");
+	container.appendChild(createDoneButton(collection, infoFields));
+}
+
+function createDoneButton(collection, infoFields) {
+	let button = document.createElement("button");
+	button.textContent = "Done";
+	button.classList.add("new-item-done-button");
+	button.classList.add("add-nav-button");
+	button.addEventListener("click", () => submitNewItem(collection, infoFields));
+
+	return button;
+}
+
+function createInfoField(fieldName, input) {
+	let infoFieldName = document.createElement("span");
+	infoFieldName.textContent = fieldName;
+	infoFieldName.classList.add("add-info-field-name");
+
+	input.classList.add("add-info-field-input");
+
+	let infoFieldContainer = document.createElement("div");
+	infoFieldContainer.appendChild(infoFieldName);
+	infoFieldContainer.appendChild(input);
+
+	return infoFieldContainer;
+}
+
+function submitNewItem(collection, infoFields) {
+	let newItem = collection.itemGenerator();
+	for (let field in infoFields) {
+		if (field === "first" || field === "last") {
+			newItem.contactName[field] = infoFields[field].value;
+		} else newItem[field] = infoFields[field].value;
+	}
+	document.querySelector(".popup-window-container").close();
+	collection.display();
+}
+
+export { createAddWindow, initializeAddWindow, displayNewCollectionItemWindow };

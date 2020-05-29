@@ -16,6 +16,10 @@ let projects = createCollection(project),
 	contacts = createCollection(contact),
 	todos = createCollection(todo);
 
+projects.display = () => displayCollection(projects);
+categories.display = () => displayCollection(categories);
+contacts.display = () => displayContacts(contacts);
+
 let body = document.querySelector("body"),
 	header = document.querySelector("header"),
 	footer = document.querySelector("footer"),
