@@ -4,6 +4,7 @@ function displayContacts(contactList) {
 	let main = document.querySelector("main");
 	main.innerHTML = "";
 	main.setAttribute("displaying", "contact");
+	main.setAttribute("displaying-contacts", true);
 
 	let title = document.querySelector(".window-title");
 	title.disabled = true;
