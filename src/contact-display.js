@@ -6,6 +6,8 @@ import { toggleEdit, stopEdit } from "./edit-display.js";
 function displayContactWindow(contact) {
 	let main = document.querySelector("main");
 	main.innerHTML = "";
+	main.setAttribute("displaying-contacts", false);
+	main.displayingContacts = false;
 
 	let title = document.querySelector(".window-title");
 	title.disabled = true;
@@ -52,8 +54,8 @@ function createInfoFieldDisplay(parentObj, fieldName, disabled) {
 	fieldContentDisplay.classList.add("contact-info-field-content");
 	fieldContentDisplay.value = parentObj[fieldName];
 	fieldContentDisplay.disabled = disabled;
-	fieldContentDisplay.addEventListener("change", () =>
-		updateField(contact, "fieldName", fieldContentDisplay)
+	fieldContentDisplay.addEventListener("input", () =>
+		updateField(parentObj, fieldName, fieldContentDisplay)
 	);
 
 	let fieldDisplay = document.createElement("div");
