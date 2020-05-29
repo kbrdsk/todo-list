@@ -201,9 +201,12 @@ function createAddWindow(receiverFunc) {
 	function backToTypeSelect() {
 		document.querySelector(".type-select-container").innerHTML = "";
 
+		let addWindow = document.querySelector(".add-window");
+
 		let container = document.querySelector(".add-window");
-		container.removeChild(document.querySelector(".back-button"));
-		container.removeChild(document.querySelector(".select-button"));
+		while (addWindow.querySelector(".add-nav-button")) {
+			container.removeChild(addWindow.querySelector(".add-nav-button"));
+		}
 
 		displayTypeSelectWindow();
 	}

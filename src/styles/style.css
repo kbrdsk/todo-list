@@ -169,6 +169,10 @@ main[displaying=collection]{
 	overflow: hidden;
 }
 
+.collection-item-display[type=category]{
+	background-color: var(--color-3);
+}
+
 .collection-item-header{
 	display: flex;
 	justify-content: space-between;
@@ -228,6 +232,14 @@ body[editing=false] .contact-listing-delete-button{
     border-radius: 3vw;
     margin: 1.5vw 1.5vw;
     display: flex;
+}
+
+.tag[type=project]{
+	background-color: var(--color-1);
+}
+
+.tag[type=category]{
+	background-color: var(--color-3);
 }
 
 .tag-delete-button{

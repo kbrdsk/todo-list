@@ -43,6 +43,7 @@ function displayItem(item) {
 	let itemDisplay = document.createElement("div");
 	itemDisplay.classList.add("collection-item-display");
 	itemDisplay.item = item;
+	itemDisplay.setAttribute("type", item.createTag().tagType);
 
 	let title = document.createElement("h3");
 	title.classList.add("collection-item-title");
