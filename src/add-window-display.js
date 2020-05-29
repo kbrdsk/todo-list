@@ -69,7 +69,10 @@ function createAddWindow(receiverFunc) {
 		let newItem = receiverFunc(currentItem, selectedItem).item;
 		receiver.todoList.add(newItem);
 		currentItem.display();
-		if (selectedItem.createTag().tagType === "contact") {
+		if (
+			selectedItem.createTag &&
+			selectedItem.createTag().tagType === "contact"
+		) {
 			let main = document.querySelector("main");
 			main.displayingContacts = !main.displayingContacts;
 			main.setAttribute("displaying-contacts", main.displayingContacts);
@@ -116,9 +119,7 @@ function createAddWindow(receiverFunc) {
 		container.removeChild(container.querySelector(".new-item-container"));
 
 		for (let field in infoFields) {
-			container.appendChild(
-				createInfoField(field, infoFields[field])
-			);
+			container.appendChild(createInfoField(field, infoFields[field]));
 		}
 
 		let navContainer = document.createElement("div");

@@ -1,6 +1,9 @@
 import { todos, projects, categories, contacts } from "./index.js";
 
 function save() {
+	for(let todo of todos.collection){
+		if(todo.tags.list().length === 0) todos.collection.delete(todo);
+	}
 	let collectionsArray = [todos, projects, categories, contacts];
 	let packedArray = collectionsArray.map(packCollection);
 	let dataString = JSON.stringify(packedArray);
