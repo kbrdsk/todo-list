@@ -1,5 +1,8 @@
 import { createAddButton, contacts } from "./index.js";
-import { displayNewCollectionItemWindow } from "./add-window-display.js";
+import {
+	displayNewCollectionItemWindow,
+	createAddWindow,
+} from "./add-window-display.js";
 
 function displayContacts(contactList) {
 	let main = document.querySelector("main");
@@ -85,8 +88,27 @@ function toggleContactDisplay() {
 	main.setAttribute("displaying-contacts", main.displayingContacts);
 }
 
+function displayAddAssociatedContactWindow() {
+	let receiverFunc = (current, selected) => {
+		return { receiver: selected, item: current };
+	};
+	let addWindow = createAddWindow(receiverFunc);
+	Object.assign(addWindow.typeSelectors, {
+		"Existing Contact": contacts,
+	});
+	Object.assign(addWindow.newItems, {
+		"New Contact": contacts,
+	});
+	addWindow.display();
+}
+
 let contactsButton = document.createElement("button");
 contactsButton.classList.add("contacts-button");
 contactsButton.addEventListener("click", toggleContactDisplay);
 
-export { displayContacts, displayAssociatedContacts, contactsButton };
+export {
+	displayContacts,
+	displayAssociatedContacts,
+	contactsButton,
+	displayAddAssociatedContactWindow,
+};

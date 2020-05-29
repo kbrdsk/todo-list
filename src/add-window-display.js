@@ -1,5 +1,4 @@
 import { projects, categories, todos, contacts } from "./index.js";
-import { displayCollection } from "./collection-display.js";
 
 function initializeAddWindow() {
 	projects.newItemInfoFields = function () {
@@ -70,6 +69,11 @@ function createAddWindow(receiverFunc) {
 		let newItem = receiverFunc(currentItem, selectedItem).item;
 		receiver.todoList.add(newItem);
 		currentItem.display();
+		if (selectedItem.createTag().tagType === "contact") {
+			let main = document.querySelector("main");
+			main.displayingContacts = !main.displayingContacts;
+			main.setAttribute("displaying-contacts", main.displayingContacts);
+		}
 		document.querySelector(".popup-window-container").close();
 	}
 
@@ -137,7 +141,9 @@ function createAddWindow(receiverFunc) {
 	function submitNewItem(collection, infoFields) {
 		let newItem = collection.itemGenerator();
 		for (let field in infoFields) {
-			newItem[field] = infoFields[field].value;
+			if (field === "first" || field === "last") {
+				newItem.contactName[field] = infoFields[field].value;
+			} else newItem[field] = infoFields[field].value;
 		}
 		addNewItem(newItem);
 	}
@@ -249,7 +255,9 @@ function createItemListing(itemObject, displayList, selectedTag) {
 	let objectListing = document.createElement("div");
 	objectListing.classList.add("tag-object-listing");
 	objectListing.itemObject = itemObject;
-	objectListing.textContent = itemObject.title;
+	if (itemObject.contactName)
+		objectListing.textContent = `${itemObject.contactName.last}, ${itemObject.contactName.first}`;
+	else objectListing.textContent = itemObject.title;
 	objectListing.addEventListener("click", () =>
 		selectListing(objectListing, selectedTag)
 	);

@@ -1,7 +1,7 @@
 import { project } from "./todo.js";
 import { createAddButton } from "./index.js";
 import { displayTodoList, displayAddTodoWindow } from "./todo-list-display.js";
-import { displayAssociatedContacts } from "./contact-list-display.js";
+import { displayAssociatedContacts, displayAddAssociatedContactWindow } from "./contact-list-display.js";
 import { displayDescription } from "./todo-display.js";
 import { displayTags } from "./tag-display.js";
 
@@ -28,10 +28,17 @@ function displayProject(projectItem) {
 	main.appendChild(todoListDisplay);
 	main.appendChild(displayAssociatedContacts(projectItem));
 
-	main.appendChild(createAddButton(displayAddTodoWindow));
+	main.appendChild(createAddButton(displayAddTodoOrContact));
 
 	tagContainer.innerHTML = "";
 	tagContainer.appendChild(displayTags(projectItem.tags.list()));
+}
+
+function displayAddTodoOrContact(){
+	let main = document.querySelector("main");
+	if(main.displayingContacts){
+		displayAddAssociatedContactWindow();
+	} else displayAddTodoWindow();
 }
 
 project.proto.display = function () {
