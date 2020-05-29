@@ -1,3 +1,25 @@
+import { projects, categories, todos, contacts } from "./index.js";
+
+function initializeAddWindow() {
+	projects.newItemInfoFields = function () {
+		return {
+			title: document.createElement("input"),
+			description: document.createElement("textarea"),
+		};
+	};
+
+	categories.newItemInfoFields = function () {
+		return { title: document.createElement("input") };
+	};
+
+	todos.newItemInfoFields = function () {
+		return {
+			title: document.createElement("input"),
+			description: document.createElement("textarea"),
+		};
+	};
+}
+
 function createAddWindow(receiverFunc) {
 	let typeSelectors = {},
 		newItems = {};
@@ -26,9 +48,7 @@ function createAddWindow(receiverFunc) {
 		button.classList.add("add-new-item-button");
 		button.classList.add("type-select-button");
 		button.textContent = title;
-		button.addEventListener("click", () =>
-			addNewItem(collection.itemGenerator())
-		);
+		button.addEventListener("click", () => displayNewItemWindow(collection));
 
 		return button;
 	}
@@ -72,12 +92,63 @@ function createAddWindow(receiverFunc) {
 		return button;
 	}
 
+	function displayNewItemWindow(collection) {
+		let infoFields = collection.newItemInfoFields();
+
+		let typeSelectContainer = document.querySelector(".type-select-container");
+
+		typeSelectContainer.innerHTML = "";
+		document.querySelector(".new-item-container").innerHTML = "";
+
+		for (let field in infoFields) {
+			typeSelectContainer.appendChild(
+				createInfoField(field, infoFields[field])
+			);
+		}
+
+		let container = document.querySelector(".add-window");
+		container.appendChild(createBackButton());
+		container.appendChild(createDoneButton(collection, infoFields));
+	}
+
+	function createInfoField(fieldName, input) {
+		let infoFieldName = document.createElement("span");
+		infoFieldName.textContent = fieldName;
+		infoFieldName.classList.add("add-info-field-name");
+
+		input.classList.add("add-info-field-input");
+
+		let infoFieldContainer = document.createElement("div");
+		infoFieldContainer.appendChild(infoFieldName);
+		infoFieldContainer.appendChild(input);
+
+		return infoFieldContainer;
+	}
+
+	function createDoneButton(collection, infoFields) {
+		let button = document.createElement("button");
+		button.textContent = "Done";
+		button.classList.add("new-item-done-button");
+		button.classList.add("add-nav-button");
+		button.addEventListener("click", () =>
+			submitNewItem(collection, infoFields)
+		);
+
+		return button;
+	}
+
+	function submitNewItem(collection, infoFields) {
+		let newItem = collection.itemGenerator();
+		for (let field in infoFields) {
+			newItem[field] = infoFields[field].value;
+		}
+		addNewItem(newItem);
+	}
+
 	function displayObjectSelectWindow(collection) {
 		let selectedItem = { listing: null };
 
-		let typeSelectContainer = document.querySelector(
-			".type-select-container"
-		);
+		let typeSelectContainer = document.querySelector(".type-select-container");
 		typeSelectContainer.appendChild(
 			displayObjectSelection(collection.collection, selectedItem)
 		);
@@ -91,8 +162,7 @@ function createAddWindow(receiverFunc) {
 		let displayList = document.createElement("div");
 		displayList.classList.add("selection-list");
 
-		let currentObject = document.querySelector(".window-title")
-			.activeObject;
+		let currentObject = document.querySelector(".window-title").activeObject;
 		let parent = (obj) => receiverFunc(currentObject, obj).receiver;
 		let item = (obj) => receiverFunc(currentObject, obj).item;
 
@@ -100,9 +170,7 @@ function createAddWindow(receiverFunc) {
 			addableObject(parent(obj), item(obj))
 		);
 
-		objectList.map((obj) =>
-			createItemListing(obj, displayList, selectedItem)
-		);
+		objectList.map((obj) => createItemListing(obj, displayList, selectedItem));
 
 		return displayList;
 	}
@@ -205,4 +273,4 @@ function selectListing(objectListing, selectedItem) {
 	selectedItem.listing = objectListing;
 }
 
-export { createAddWindow };
+export { createAddWindow, initializeAddWindow };

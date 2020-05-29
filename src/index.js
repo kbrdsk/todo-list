@@ -3,6 +3,7 @@ import { displayCollection } from "./collection-display.js";
 import { displayContacts, contactsButton } from "./contact-list-display.js";
 import { createCollection } from "./collection.js";
 import { save, load, initializeStorage } from "./storage.js";
+import { initializeAddWindow } from "./add-window-display.js";
 import "./project-display.js";
 import "./contact-display.js";
 import "./category-display.js";
@@ -125,6 +126,7 @@ function createAddButton(addFunction) {
 
 //initialize
 initializeStorage();
+initializeAddWindow();
 body.editing = false;
 body.setAttribute("editing", "false");
 setInterval(save, 5000);
