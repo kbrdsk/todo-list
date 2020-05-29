@@ -110,20 +110,23 @@ function createAddWindow(receiverFunc) {
 	function displayNewItemWindow(collection) {
 		let infoFields = collection.newItemInfoFields();
 
-		let typeSelectContainer = document.querySelector(".type-select-container");
+		let container = document.querySelector(".add-window");
 
-		typeSelectContainer.innerHTML = "";
-		document.querySelector(".new-item-container").innerHTML = "";
+		container.removeChild(container.querySelector(".type-select-container"));
+		container.removeChild(container.querySelector(".new-item-container"));
 
 		for (let field in infoFields) {
-			typeSelectContainer.appendChild(
+			container.appendChild(
 				createInfoField(field, infoFields[field])
 			);
 		}
 
-		let container = document.querySelector(".add-window");
-		container.appendChild(createBackButton());
-		container.appendChild(createDoneButton(collection, infoFields));
+		let navContainer = document.createElement("div");
+		navContainer.classList.add("add-nav-container");
+		navContainer.appendChild(createBackButton());
+		navContainer.appendChild(createDoneButton(collection, infoFields));
+
+		container.appendChild(navContainer);
 	}
 
 	function createDoneButton(collection, infoFields) {
@@ -151,14 +154,16 @@ function createAddWindow(receiverFunc) {
 	function displayObjectSelectWindow(collection) {
 		let selectedItem = { listing: null };
 
-		let typeSelectContainer = document.querySelector(".type-select-container");
-		typeSelectContainer.appendChild(
-			displayObjectSelection(collection.collection, selectedItem)
-		);
+		let navContainer = document.createElement("div");
+		navContainer.classList.add("add-nav-connavContainer");
+		navContainer.appendChild(createBackButton());
+		navContainer.appendChild(createSelectButton(selectedItem));
 
 		let container = document.querySelector(".add-window");
-		container.appendChild(createBackButton());
-		container.appendChild(createSelectButton(selectedItem));
+		container.appendChild(
+			displayObjectSelection(collection.collection, selectedItem)
+		);
+		container.appendChild(navContainer);
 	}
 
 	function displayObjectSelection(objectSet, selectedItem) {
@@ -202,16 +207,8 @@ function createAddWindow(receiverFunc) {
 	}
 
 	function backToTypeSelect() {
-		document.querySelector(".type-select-container").innerHTML = "";
-
-		let addWindow = document.querySelector(".add-window");
-
-		let container = document.querySelector(".add-window");
-		while (addWindow.querySelector(".add-nav-button")) {
-			container.removeChild(addWindow.querySelector(".add-nav-button"));
-		}
-
-		displayTypeSelectWindow();
+		document.querySelector(".popup-window-container").close();
+		display();
 	}
 	return { display, typeSelectors, newItems };
 }
@@ -285,13 +282,13 @@ function displayNewCollectionItemWindow(collection) {
 	displayAddWindow();
 	let infoFields = collection.newItemInfoFields();
 
-	let typeSelectContainer = document.querySelector(".type-select-container");
+	let addWindow = document.querySelector(".add-window");
 
-	typeSelectContainer.innerHTML = "";
+	document.querySelector(".type-select-container").innerHTML = "";
 	document.querySelector(".new-item-container").innerHTML = "";
 
 	for (let field in infoFields) {
-		typeSelectContainer.appendChild(createInfoField(field, infoFields[field]));
+		addWindow.appendChild(createInfoField(field, infoFields[field]));
 	}
 
 	let container = document.querySelector(".add-window");
@@ -316,6 +313,8 @@ function createInfoField(fieldName, input) {
 	input.classList.add("add-info-field-input");
 
 	let infoFieldContainer = document.createElement("div");
+	infoFieldContainer.classList.add("add-info-field-container");
+
 	infoFieldContainer.appendChild(infoFieldName);
 	infoFieldContainer.appendChild(input);
 
