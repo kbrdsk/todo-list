@@ -11,6 +11,7 @@ function displayCollection(collection) {
 
 	main.setAttribute("displaying", "collection");
 	document.querySelector("body").toggleEditing = toggleCollectionEdit;
+	document.querySelector(".window-title").activeObject = collection;
 
 	for (let item of itemSet) {
 		main.appendChild(displayItem(item));

@@ -12,6 +12,7 @@ function displayContacts(contactList) {
 
 	let title = document.querySelector(".window-title");
 	title.disabled = true;
+	title.activeObject = contacts;
 
 	let contactsButton = document.querySelector(".contacts-button");
 	contactsButton.disabled = true;
