@@ -23,26 +23,40 @@ function Project(name = "New Project") {
 	this.todoList = Object.create(this._todoList);
 	this.createTag = tagGenerator("project").bind(this);
 
-	this.todoList.add = function (proj) {
-		if (
-			Object.getPrototypeOf(proj) === Project.prototype &&
-			this.isChild(proj)
-		) {
+	this.todoList.add = function (item) {
+		if (isOwnParent.call(this, item)) {
 			throw "Looping projects";
 		}
-		this._todoList.add(proj);
+		this._todoList.add(item);
 	};
 }
 
 Project.prototype = {
 	isChild(project) {
-		let projects = this.tags.list().filter((tag) => tag.tagType === "project");
-		if (!projects) return false;
-		if (projects.some((proj) => proj.id === project)) return true;
-		if (projects.some((proj) => proj.id.isChild(project))) return true;
-		return false;
+		let parentProjects = this.tags
+			.list()
+			.filter((tag) => tag.tagType === "project");
+		return (
+			!!parentProjects &&
+			(isDirectChild(project, parentProjects) ||
+				isDescendant(project, parentProjects))
+		);
 	},
 };
+
+function isDirectChild(project, parents) {
+	return parents.some((proj) => proj.obj === project);
+}
+
+function isDescendant(project, parents) {
+	return parents.some((proj) => proj.obj.isChild(project));
+}
+
+function isOwnParent(item) {
+	return (
+		Object.getPrototypeOf(item) === Project.prototype && this.isChild(item)
+	);
+}
 
 function Contact(first = "New", last = "Contact") {
 	this.contactName = { first, last };
@@ -77,7 +91,7 @@ function createTodoList(creatingObj) {
 			todos = [...todos.slice(0, index), ...todos.slice(index + 1)];
 		}
 
-		let tag = todoItem.tags.list().find((tag) => tag.id === creatingObj);
+		let tag = todoItem.tags.list().find((tag) => tag.obj === creatingObj);
 		todoItem.tags.remove(tag);
 	};
 
@@ -143,7 +157,7 @@ function TagList() {
 
 function tagGenerator(tagType) {
 	return function () {
-		return { tagType, id: this };
+		return { tagType, obj: this };
 	};
 }
 
