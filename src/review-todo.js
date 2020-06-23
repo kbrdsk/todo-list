@@ -1,131 +1,66 @@
 let isDate = require("date-fns/isDate");
 
-function todo(todoName = "New Todo") {
-	let title = todoName,
-		description = "",
-		urgency = 0,
-		isDone = false,
-		dueDate = todoDate(),
-		scheduleDate = todoDate(),
-		tags = tagList();
-
-	let todoObj = Object.create(todo.proto);
-	Object.assign(todoObj, {
-		title,
-		description,
-		isDone,
-		urgency,
-		dueDate,
-		scheduleDate,
-		tags,
-	});
-
-	return todoObj;
+function Todo(name = "New Todo") {
+	this.title = name;
+	this.description = "";
+	this.urgency = 0;
+	this.isDone = false;
+	this.dueDate = new TodoDate();
+	this.scheduleDate = new TodoDate();
+	this.tags = new TagList();
 }
 
-todo.proto = {};
+function Project(name = "New Project") {
+	this.title = name;
+	this.description = "";
+	this.favorite = false;
+	this.urgency = 0;
+	this.isDone = false;
+	this.dueDate = new TodoDate();
+	this.scheduleDate = new TodoDate();
+	this.tags = new TagList();
+	this._todoList = createTodoList(this);
+	this.todoList = Object.create(this._todoList);
+	this.createTag = tagGenerator("project").bind(this);
 
-function project(projectName = "New Project") {
-	let proto = Object.assign(project.proto, { isChild });
-	let projectObj = Object.create(proto);
-
-	let title = projectName,
-		description = "",
-		favorite = false,
-		urgency = 0,
-		isDone = false,
-		dueDate = todoDate(),
-		scheduleDate = todoDate(),
-		tags = tagList(),
-		_todoList = createTodoList(projectObj),
-		todoList = Object.create(_todoList),
-		createTag = tagGenerator("project").bind(projectObj);
-
-	todoList.add = (proj) => {
+	this.todoList.add = function (proj) {
 		if (
-			Object.getPrototypeOf(proj) === project.proto &&
-			projectObj.isChild(proj)
+			Object.getPrototypeOf(proj) === Project.prototype &&
+			this.isChild(proj)
 		) {
 			throw "Looping projects";
 		}
-		_todoList.add(proj);
+		this._todoList.add(proj);
 	};
+}
 
-	function isChild(project) {
-		let projects = this.tags
-			.list()
-			.filter((tag) => tag.tagType === "project");
+Project.prototype = {
+	isChild(project) {
+		let projects = this.tags.list().filter((tag) => tag.tagType === "project");
 		if (!projects) return false;
 		if (projects.some((proj) => proj.id === project)) return true;
 		if (projects.some((proj) => proj.id.isChild(project))) return true;
 		return false;
-	}
+	},
+};
 
-	Object.assign(projectObj, {
-		title,
-		description,
-		favorite,
-		isDone,
-		urgency,
-		dueDate,
-		scheduleDate,
-		tags,
-		todoList,
-		createTag,
-	});
-
-	return projectObj;
+function Contact(first = "New", last = "Contact") {
+	this.contactName = { first, last };
+	this.email = "";
+	this.phone = "";
+	this.organization = "";
+	this.favorite = false;
+	this.tags = new TagList();
+	this.todoList = createTodoList(this);
+	this.createTag = tagGenerator("contact").bind(this);
 }
 
-project.proto = {};
-
-function contact(first = "New", last = "Contact") {
-	let contactObj = Object.create(contact.proto);
-
-	let contactName = { first, last },
-		email = "",
-		phone = "",
-		organization = "",
-		favorite = false,
-		tags = tagList(),
-		todoList = createTodoList(contactObj),
-		createTag = tagGenerator("contact").bind(contactObj);
-
-	Object.assign(contactObj, {
-		contactName,
-		email,
-		phone,
-		organization,
-		favorite,
-		tags,
-		todoList,
-		createTag,
-	});
-
-	return contactObj;
+function Category(categoryName = "New Category") {
+	this.title = categoryName;
+	this.favorite = false;
+	this.todoList = createTodoList(this);
+	this.createTag = tagGenerator("category").bind(this);
 }
-
-contact.proto = {};
-
-function category(categoryName = "New Category") {
-	let categoryObj = Object.create(category.proto);
-
-	let title = categoryName,
-		favorite = false,
-		todoList = createTodoList(categoryObj),
-		createTag = tagGenerator("category").bind(categoryObj);
-
-	Object.assign(categoryObj, {
-		title,
-		favorite,
-		todoList,
-		createTag,
-	});
-
-	return categoryObj;
-}
-
-category.proto = {};
 
 function createTodoList(creatingObj) {
 	let todos = [];
@@ -166,41 +101,44 @@ function todoUrgencySort(todo1, todo2) {
 	return 0;
 }
 
-function todoDate() {
+function TodoDate() {
 	let date = null;
 
-	let get = () => date;
+	Object.defineProperties(this, {
+		date: {
+			get: function () {
+				return date;
+			},
+			set: function (setDate) {
+				if (!isDate(setDate)) throw "Must enter a valid Date";
+				date = setDate;
+			},
+		},
+	});
 
-	let set = (setDate) => {
-		if (!isDate(setDate)) throw "Must enter a valid Date";
-		date = setDate;
-	};
-
-	let remove = () => {
+	this.remove = () => {
 		date = null;
 	};
 }
 
-function tagList() {
-	let tags = new Set();
+function TagList() {
+	this.tags = new Set();
 
-	let add = (tag) => {
-		tags.add(tag);
+	this.add = function (tag) {
+		this.tags.add(tag);
 	};
 
-	let remove = (tag) => {
-		tags.delete(tag);
+	this.remove = function (tag) {
+		this.tags.delete(tag);
 	};
 
-	let clear = () => {
-		tags = new Set();
+	this.clear = function () {
+		this.tags = new Set();
 	};
 
-	let list = () => {
-		return Array.from(tags);
+	this.list = function () {
+		return Array.from(this.tags);
 	};
-
-	return { list, add, remove };
 }
 
 function tagGenerator(tagType) {
@@ -209,4 +147,4 @@ function tagGenerator(tagType) {
 	};
 }
 
-export { todo, project, contact, category };
+export { Todo, Project, Contact, Category };
